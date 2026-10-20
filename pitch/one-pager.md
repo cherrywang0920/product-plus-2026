@@ -61,8 +61,6 @@ We interviewed 3 current Aritzia store associates (anonymous) who use CMT daily 
 | **No notifications.** Runners only see a request by refreshing; the Advisor doesn't know if anyone saw it | All 3 [I] |
 | **Phones clash with the floor.** Retrieving happens "while holding bundles and supporting clients", under a "keep hands busy" rule | [I] |
 | **Skipped at peak.** Staff shout instead, so requests go unrecorded exactly when demand is highest | [I] |
-| **Overstretched runners.** Busy days "feel like 3 people are required"; quiet days are scheduled with 1. Most BAs don't have CMT at all | [I] |
-| **Unmet demand is invisible.** If the size isn't there, the client leaves and no system records it | [A], to confirm |
 
 ## 6. Insight: Aritzia's floor already runs on voice, so give voice a direction
 
