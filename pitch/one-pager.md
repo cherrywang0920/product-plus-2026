@@ -32,12 +32,13 @@ Our focus is on Aritzia store employees who deal with clients directly: **Style 
 
 ## 3. Segmentation targeting: Aritzia's boutique floor, where most of its demand is spoken
 
-We focus on Aritzia's store teams because they are the front line of client relationships, and Aritzia's "everyday luxury" promise is delivered by them in person.
+We focus on Aritzia's store teams because they are the front line of client relationships, and Aritzia's "everyday luxury" promise is delivered by them in person. Their floor runs on a "keep hands busy" rule: associates are expected to be folding, carrying or styling, never standing on a phone. Any tool that asks them to look at a screen works against the culture that delivers the service [I].
 
 | Why Aritzia's boutique floor | Evidence |
 |---|---|
 | 65% of revenue ($2.41B) comes from 144 boutiques | [S17] |
 | Associates serve clients one on one and pull items from stock, so every request is a precise demand signal made before any sale | [S19], [I] |
+| "Keep hands busy" floor rule: phone-based tools clash with how associates are expected to work, so at peak they skip CMT | [I] |
 | Late, heavy inventory and markdowns in 2023 cut FY24 gross margin to 38.5%; FY26 recovered to 44.9% on lower markdowns | [S18], [S17] |
 | 12–13 new boutiques a year, mostly in new US markets, with no sales history to forecast from | [S17] |
 | Already an SAP customer (ERP ECC 6.0 since 2008); ECC standard support ends Dec 31, 2027 | [S11], [S32] |
