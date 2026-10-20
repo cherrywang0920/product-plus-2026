@@ -92,7 +92,6 @@ Each on-shift associate wears a company earpiece, picked up at clock-in. **All c
 | Size not in store | Client leaves; nothing recorded [A] | Logged as unmet demand; other options offered (next release) |
 | Head office learns | When weekly sell-through shows a sell-out [A] | Next morning: "Size 4 black requested 47× this week, 0 in stock" (illustrative) |
 
-**Deliberately left out:** an AI voice or AI assistant in the ear, push-to-talk, a new phone app, customer-facing voice, replacing CMT. CMT stays the system of record; the earpiece replaces the typing and the shouting.
 **Next releases:** substitutes, another boutique or ship-to-client when not found; "not found but system says in stock" corrects stock counts, which also helps pickup orders [I].
 
 ## 8. People talk, AI routes and records, people decide
