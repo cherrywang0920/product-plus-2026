@@ -20,11 +20,11 @@ Draft v4, Oct 20. Rebuilt from the team's User Insights draft. The team lays thi
 - **Solution:** an earpiece. Say a teammate's name and you're talking to them, and only them. Coworkers still talk to coworkers; AI just gets the voice to the right person and quietly logs each request in SAP Business Data Cloud.
 - **Payoff:** ~$7–15M a year in gross profit against ~$3M a year in cost. Breaks even at +0.08 points of gross margin [C, A].
 
-## 1. Problem statement: slow floor communication costs Aritzia sales and margin
+## 1. Problem statement: every unanswered request on Aritzia's floor loses money twice
 
-Store employees like Style Advisors (SAs) and Boutique Associates (BAs), who serve clients directly, rely on fast, synchronised communication to deliver Aritzia's "everyday luxury" service. But their current tool, CMT (Clientele Management Tool), gives no real-time notifications. Requests wait until someone refreshes, or get shouted across the floor at peak, and the cost lands in two places:
-- **Sales lost now:** the client waits, or leaves without the size. Out-of-stocks cost retailers ~4% of sales [C from S4]; slow hand-offs on the floor contribute to that at Aritzia [A].
-- **Margin lost later:** a request that never became a sale is never recorded, so allocation can't see which styles and sizes are short in which boutique. Stock lands in the wrong place and gets marked down. **One point of gross margin is worth ~$37M** to Aritzia [C].
+Aritzia's Style Advisors and Boutique Associates need to get a client's request to the right teammate in seconds, without leaving the client. But CMT (Clientele Management Tool), the tool they coordinate through, sends no real-time notifications, so at peak requests are missed or shouted across the floor [I]. Clients wait or leave without the item, and the demand behind those lost sales is never recorded.
+- **Sales lost today:** slow hand-offs contribute to out-of-stock losses, ~4% of retail sales [C from S4, A].
+- **Margin lost later:** unrecorded demand means stock lands in the wrong boutique and gets marked down; 1 margin point ≈ $37M [C].
 
 ## 2. User overview: frontline associates who are always on the move
 
