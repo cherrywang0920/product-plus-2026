@@ -18,7 +18,7 @@ Draft v4, Oct 20. Rebuilt from the team's User Insights draft. The team lays thi
 
 - **Problem:** Aritzia's store teams coordinate through CMT, which sends no real-time notifications, so requests are missed, refreshed by hand or shouted across the floor. Clients wait, sales slip, and demand that goes unmet is never recorded.
 - **Solution:** an earpiece. Say a teammate's name and you're talking to them, and only them. Coworkers still talk to coworkers; AI just gets the voice to the right person and quietly logs each request in SAP Business Data Cloud.
-- **Payoff:** ~$7–15M a year in gross profit against ~$3M a year in cost. Breaks even at +0.08 points of gross margin [C, A].
+- **Payoff:** ~$7–15M a year in gross profit against ~$2.6M a year in cost, mostly software. Breaks even at +0.07 points of gross margin [C, A].
 
 ## 1. Problem statement: every unanswered request on Aritzia's floor loses money twice
 
@@ -127,18 +127,18 @@ All CAD, from Aritzia's FY26 figures [S17]. Everything else is labelled.
 | Cost | Calculation | Amount |
 |---|---|---|
 | **Software** (Joule voice, SAP BTP, Business Data Cloud usage) | $1,500 per boutique per month [A; SAP pricing not public] × 144 | **$2.6M / year** |
-| **Earpieces** | 20 per boutique (peak shift + spares) [A] × $250 [A] × 144 = $0.72M, replaced every 2 years | **$0.72M once, ~$0.36M / year** |
+| **Earpieces** | Boutiques already use earpieces [I]; reuse them where compatible. Budget 10 replacements per boutique [A] × $50 [A] × 144 | **~$0.07M once** |
 | **Integration** (CMT, SAP stock data, workforce scheduling) | One-time [A] | **$1.5–3M** |
 | **Training** | ~40 staff per boutique [A] × 144 × 1 h × $22 | **~$0.13M** |
 
-**Payback:** year 1 costs ~$5.0–6.5M against ~$7–15M benefit [C]. Ongoing ~$3.0M a year. **Break-even** needs only one of: +0.08 points of gross margin, or recovering ~7% of boutique out-of-stock losses [C].
+**Payback:** year 1 costs ~$4.3–5.8M against ~$7–15M benefit [C]. Ongoing ~$2.6M a year, almost all software. **Break-even** needs only one of: +0.07 points of gross margin, or recovering ~6% of boutique out-of-stock losses [C].
 
 **Value to SAP**
 - **First retail job for Joule voice:** a live frontline use case at a flagship fashion customer as Joule voice reaches GA (H2 2026) [S30].
 - **New data for Retail Intelligence:** requests that never became sales, which transaction-based planning can't see [S2, A].
 - **Migration:** Joule Floor needs current SAP stock data and Business Data Cloud, giving Aritzia a concrete reason to move from ECC to S/4HANA before standard support ends in 2027 [S11, S32].
 - **Revenue and repeatability:** ~$2.6M a year from Aritzia alone [A]; the same template fits SAP's other clienteling fashion retailers.
-- **Build cost:** a Joule Studio agent on SAP BTP using the LiveKit real-time voice layer SAP announced for Joule [S30] to route live audio between associates, with certified third-party earpieces; ~8 people for 9 months to pilot-ready [A].
+- **Build cost:** a Joule Studio agent on SAP BTP using the LiveKit real-time voice layer SAP announced for Joule [S30] to route live audio between associates, working with the earpieces boutiques already use where compatible; ~8 people for 9 months to pilot-ready [A].
 
 ## 10. Why SAP, why now
 
@@ -169,7 +169,7 @@ All CAD, from Aritzia's FY26 figures [S17]. Everything else is labelled.
 | Demand spike → approved transfer | Days, not weeks [A] |
 | Associates wearing the earpiece on shift | >70% [A] |
 
-**Still to validate:** whether unmet requests are logged anywhere today; how allocation decides transfers; whether Aritzia boutiques use radios or earpieces today; how staff and clients feel about earpieces on the floor.
+**Still to validate:** whether unmet requests are logged anywhere today; how allocation decides transfers; whether the earpieces boutiques use today can connect to Joule Floor or need replacing; how staff and clients feel about earpieces on the floor.
 
 ---
 
@@ -219,7 +219,7 @@ Full URLs and status: [research/sources.md](../research/sources.md).
 - **Structure:** 0 at a glance → 1 problem statement → 2 user overview → 3 segmentation → 4 stakeholders → 5 pain points (with interview quotes) → 6 insight → 7 solution → 8 AI vs people → 9 business case → 10 why SAP → 11 risks → 12 sources. The journey is cut.
 - **Confirm in a browser before submitting:** S4 (IHL), S18 (FY24 margin in Aritzia's annual report), S19 (AIF wording).
 - **Left out for privacy:** app ratings, fraud anecdote, interviewee names or initials, store location.
-- **Biggest assumptions:** 5–10% recovery of out-of-stock losses, a 0.1–0.25 point margin lift, $1,500 per boutique per month, and $250 earpieces × 20 per boutique. The break-even line exists so the case holds even if these are well off.
+- **Biggest assumptions:** 5–10% recovery of out-of-stock losses, a 0.1–0.25 point margin lift, $1,500 per boutique per month, and reusing existing earpieces (if they can't connect, budget ~$250 × 20 per boutique ≈ $0.72M once, still pays back in year 1). The break-even line exists so the case holds even if these are well off.
 - **Suggested visuals:**
   - Page 1: Maya in the fitting room. Today: phone out, shouting. With Joule Floor: "Dora, …" with hands on the client, and Dora hearing it across the floor.
   - Business case: a cost vs benefit bar with the break-even line.
