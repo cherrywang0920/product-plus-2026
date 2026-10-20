@@ -32,3 +32,4 @@ One file per interview: `YYYY-MM-DD-role-initials.md` (e.g. `2026-10-19-store-as
 
 | Date | Role | Retailer type | Interviewer | File |
 |---|---|---|---|---|
+| Oct 18–19 | 3 store associates (group) | Fashion (Aritzia) | Dora | [2026-10-19-aritzia-store-team.md](2026-10-19-aritzia-store-team.md) |
