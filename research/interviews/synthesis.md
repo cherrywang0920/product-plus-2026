@@ -29,5 +29,5 @@ Every retrieve request is a live demand signal: a client in the store asking for
 ## Gaps to close today
 
 1. **One person from head office** (merchandising, allocation or planning), even 15 minutes. Ask: do you ever see what customers asked for but couldn't buy? How do you learn a style is trending in certain stores?
-2. **Follow-up questions to the Aritzia associates:** the open questions in [the interview note](2026-10-19-aritzia-store-team.md#open-questions-for-dora).
+2. **Follow-up questions to the Aritzia associates** (acronyms now answered in the glossary): the open questions in [the interview note](2026-10-19-aritzia-store-team.md#open-questions-for-dora).
 3. **One associate at a second retailer** (part-time friends), to check this isn't specific to Aritzia.

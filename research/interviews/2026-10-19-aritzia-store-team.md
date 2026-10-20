@@ -6,6 +6,22 @@
 - Hypotheses tested: **H2** (store teams notice demand first but can't pass it on). Partly **H3** (signals get missed).
 - Original notes: Google Doc "Product +", tab "Interviews?"
 
+## Glossary (from Dora's comments in the Google Doc)
+
+| Term | Meaning |
+|---|---|
+| **SA** | Style Advisor: serves clients on the floor |
+| **AS** | Atelier Sales (stylist): works the fitting rooms and styles clients |
+| **BA** | Boutique Associate: grabs items for clients and puts items back on the floor |
+| **AO** | Atelier Operations: folding and running clothes back to their spots on the floor |
+| **MC** | Merchandise (tasks) |
+| **RP** | Returns processing |
+| **OF** | Order fulfilment |
+| **BOPUS** | Buy online, pick up in store |
+| **Running** | Grabbing items for clients on the floor |
+| **Suite** | Fitting room |
+| **Fill** | Shared work phone running the Omnichannel app |
+
 ## Tools they use
 
 Per the interviewees, both apps "run on SAP". **Unverified:** we don't know whether this means SAP builds the apps or they sit on top of Aritzia's SAP back end.
@@ -20,8 +36,8 @@ Per the interviewees, both apps "run on SAP". **Unverified:** we don't know whet
 Reconstructed from J1's feedback. Confirm with Dora.
 
 1. A client on the floor wants an item or size. The associate (SA) submits a **retrieve** request in CMT.
-2. Someone in the back area (**AO**) watches CMT, finds the item and brings it out ("running").
-3. CMT sends **no notifications**. The back area only sees new requests by **manually refreshing**, and the floor doesn't know when an item is ready.
+2. Someone in atelier operations (**AO**) or a boutique associate (**BA**) watches CMT, finds the item and brings it out ("running").
+3. CMT sends **no notifications**. AO only sees new requests by **manually refreshing**, and the floor doesn't know when an item is ready.
 4. Data often doesn't load. Requests sometimes only become visible when someone says them out loud.
 5. At peak times, staff **skip CMT entirely** and go back to asking verbally because it's faster.
 
@@ -29,11 +45,11 @@ Reconstructed from J1's feedback. Confirm with Dora.
 
 **Visibility: nothing is pushed to the user**
 - "Zero indicator of any notifications, no notifs unless you manually refresh."
-- No notification when a retrieve is submitted, so the back area has to keep checking (J1).
+- No notification when a retrieve is submitted, so AO has to keep checking (J1).
 - Retrieving only works with "near perfect cooperation/communication" to avoid bottlenecks (J1).
 
 **Workflow strain at peak**
-- CMT adds an extra layer of work in the back area. It "feels like 3 people are required in AO", but quiet days are scheduled with 1 (J1).
+- CMT adds a layer of merchandise tasks to atelier operations (AO). It "feels like 3 people are required in AO", but quiet days are scheduled with 1 (J1).
 - Prepping, running and retrieving while holding bundles and serving clients feels inefficient (J1).
 - At peak, staff "may resort to skipping CMT entirely just to speed up the retrieving process" (J1).
 - Manually closing and reopening the app disrupts work on the floor.
@@ -42,12 +58,12 @@ Reconstructed from J1's feedback. Confirm with Dora.
 - CMT often bugs out and shows nothing.
 - Omnichannel: UI is poor, devices are laggy, orders appear and then "never come"; fraudulent buy-online-pickup orders with fake cards (J1: **3/10**).
 - Small glitches: an item isn't on the list but still scans; one error breaks the app; logging out and back in sometimes fails; the checking process is confusing (JT: **5/10**).
-- No proper shut-down at close; the app has to stay on overnight (I).
+- When order fulfilment (OF) closes for the day, there's no proper shut-down; the app has to stay on overnight (I).
 
 **Access and adoption**
 - Most BAs don't have CMT. Omnichannel is on about 3 shared devices.
 - Constant phone use clashes with "keep hands busy" floor norms (J1).
-- If retrieve times become a KPI, that adds pressure, especially for items in RPs or outside the store's assortment (J1).
+- If retrieve times become a KPI, that adds pressure, especially for items stuck in returns processing (RP) or outside the store's assortment (J1). *Note: items in returns processing are in the store but hard to find, so a request can fail even when stock exists.*
 - The system "feels designed to eliminate verbal communication" between roles (J1).
 
 ## Ideas they suggested
@@ -58,7 +74,6 @@ Reconstructed from J1's feedback. Confirm with Dora.
 
 ## Open questions for Dora
 
-- Abbreviations: what are **AO, AS, SA, BA, MC, RP**? (We assumed SA is style advisor and AO is the back-of-house area.)
 - When a requested size isn't available anywhere, **is that recorded anywhere?** Does anyone outside the store ever see it?
 - Do store requests or customer feedback ever reach merchandising or allocation? How?
 - What does "run on SAP" mean to them? Is it SAP-branded on screen?
