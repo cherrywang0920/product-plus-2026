@@ -28,7 +28,7 @@ Per the interviewees, both apps "run on SAP". **Unverified:** we don't know whet
 
 | App | Who has it | What it's for |
 |---|---|---|
-| **CMT** (Clientele Matching Tool) | Every employee on their personal phone, except most BAs | Log client info; track clients on the floor; check inventory in this store and other stores; **retrieve** items from stock; move clients to the floor or into a fitting suite; atelier (alterations) |
+| **CMT** (Clientele Management Tool) | Every employee on their personal phone, except most BAs | Log client info; track clients on the floor; check inventory in this store and other stores; **retrieve** items from stock; move clients to the floor or into a fitting suite; atelier (alterations) |
 | **Omnichannel app** | Only on shared work phones ("fills"); about **3 per store** at Metrotown | Order fulfilment: online orders, store and inter-store transfers, receiving, staging, pick and pack |
 
 ## Their workflow: retrieving an item for a client
