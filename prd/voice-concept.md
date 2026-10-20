@@ -2,6 +2,23 @@
 
 Oct 19. Working name: **Joule Floor**, a voice-first assistant for store staff, built on SAP Joule. Source IDs refer to [research/sources.md](../research/sources.md). Tags: **[I]** interviews, **[P]** public source, **[A]** our assumption.
 
+## Decision (Oct 20)
+
+**Direction locked.** Problem: **slow, unreliable communication on the store floor.** Solution: **targeted voice requests built on SAP Joule's new voice capability, with every request feeding SAP Business Data Cloud.**
+
+## Problem framing
+
+> Slow, unreliable communication on the store floor means two kinds of demand go unanswered: the client waiting in the fitting room now, and the pattern head office never sees because unmet requests are never recorded. We fix both with targeted voice requests on SAP's new Joule voice, feeding every request into SAP Business Data Cloud.
+
+- **User problem (evidence: interviews):** requests send no notifications; staff refresh constantly; at peak they skip the tool and shout [I].
+- **Business problem (evidence: industry data + our inference):** slow hand-offs contribute to lost sales on the floor, and unmet requests never reach planning. Say "contributes to", not "causes": the loss is our inference [A]; the 52% / $1.7T figures are industry-wide [S4, S6].
+
+## Positioning
+
+> **SAP built the voice. We give it its first retail job, and turn every spoken request into demand data SAP's planning tools have never seen.**
+
+Voice is the input method, not the product. The value is: the request reaches the right person, they confirm, and demand that went unmet becomes data.
+
 ## One line
 
 A Style Advisor says what the client needs; the right teammate gets it, and every request, filled or not, becomes demand data head office can act on the same day.
@@ -60,17 +77,38 @@ flowchart TD
 
 | Priority | Feature | Pain it fixes | Evidence |
 |---|---|---|---|
-| **MVP** | Push-to-talk request → structured retrieve request (item, size, colour, location, substitutes) | Typing while serving a client; skipped at peak | [I] |
-| **MVP** | On-shift routing with haptic alerts and 30s escalation | No notifications; constant refreshing | [I], [cmt-notifications.md](../research/cmt-notifications.md) |
-| **MVP** | Status back to the requester (accepted, on its way, not found) | Not knowing if anyone saw it | [I] |
-| **MVP** | Demand event log: every request and its outcome | Unmet demand invisible to head office | [A] |
-| **MVP** | Head-office unmet-demand view with AI-drafted transfers; human approves | Slow response to demand shifts | [A] |
+| **MVP 1** | **Targeted voice requests**: push-to-talk; AI turns speech into a structured request (item, size, colour, location, substitutes) and sends it **only** to the right person (by name, by role, or auto-assigned) | Typing while serving; broadcast noise; skipped at peak | [I] |
+| **MVP 2** | **Acknowledgement and status**: "Dora's on it" → on its way → found / not found; haptic alerts, on-shift only, 30s escalation | No notifications; constant refreshing; going back to shouting | [I], [cmt-notifications.md](../research/cmt-notifications.md) |
+| **MVP 3** | **Request data → SAP Business Data Cloud**, with a simple head-office view of unmet demand and AI-drafted transfers that a person approves | Unmet demand invisible to head office; slow response to demand shifts | [A] |
 | Next | Not-found options: substitutes, other store, ship-to-client, waitlist | Lost sales | [A] |
 | Next | "Not found but system says in stock" → inventory correction | Phantom stock, failed online orders | [I] |
 | Later | Fitting-room signal (tried on, didn't buy, why) | Wrong size mix, markdowns | [product-ideas.md](../research/product-ideas.md) B |
 | Later | Multilingual; smartwatch / earbud | Diverse teams; fully hands-free | [A] |
 
 **Deliberately not in scope:** voice for customers, voice checkout, always-on listening, replacing CMT entirely.
+
+## Targeted routing
+
+| You say | Who gets it | If they can't take it |
+|---|---|---|
+| "**Dora**, can you grab the Effortless pant in a 4?" | Dora only | Busy, on break or off shift → next person in her role; sender is told who's taking it |
+| "**Any runner**, size 4 black…" | Best available person in that role (free, closest, on shift) | Next person if not accepted in ~30s |
+| No name ("Effortless pant, 4, black, suite 3") | AI picks based on request type | Same as above |
+
+- Two people with the same name: ask once, then remember who you usually work with.
+- Only on-shift staff are reachable (labour-law reasons in [cmt-notifications.md](../research/cmt-notifications.md)).
+- The sender always gets an acknowledgement. Without it, people go back to shouting.
+- **Differentiation:** calling by name exists elsewhere (e.g. Theatro). Ours is the combination: role- and availability-aware routing + spoken request turned into structured data + data flowing into SAP.
+- **To verify:** do Aritzia stores use radios or earpieces today (a broadcast channel)? Dora's notes don't say.
+
+## Data captured → SAP Business Data Cloud
+
+| Captured from each request | Who uses it | What they do |
+|---|---|---|
+| Item, size, colour, store, time | Allocators | See in-store demand, including requests that never became sales |
+| Outcome: found, not found, substitute accepted, sold | Allocators, buyers | Move stock between stores or reorder; fix size mix |
+| "Not found" when the system says in stock | Store managers, inventory team | Correct stock counts (also fixes failed online orders) |
+| Request volume and time to fulfil, by hour | Store managers | Staff busy hours ("feels like 3 people required, 1 scheduled" [I]) |
 
 ## Voice design rules
 
@@ -93,7 +131,16 @@ flowchart TD
 
 Rule: **AI never moves inventory or changes orders on its own.** It drafts, a person approves. This answers the case's question about human oversight.
 
-## How it fits SAP (assumptions to validate)
+## How it fits SAP
+
+**Value to SAP:**
+- **Adoption:** a ready-made frontline use case for Joule Work voice in retail, one of SAP's biggest industries.
+- **New data:** unmet-demand data for Retail Intelligence that sales-only competitors can't see.
+- **Expansion and migration:** standard support for SAP ECC (EHP 6–8) ends **Dec 31, 2027**; extended support to 2030 costs extra [S32]. Aritzia's known SAP system is ECC, upgraded to EHP7 [S11]. "Move to S/4HANA / SAP cloud and your store floor gets voice and demand capture" is a reason to choose SAP's cloud over a competitor's.
+
+**Roadmap:** pilot in a few stores via SAP Early Adopter Care (voice in early access now) → scale after Joule Work voice GA (H2 2026) [S30].
+
+**Components (assumptions to validate):**
 
 | Layer | SAP component |
 |---|---|

@@ -18,12 +18,12 @@ Team: Cherry, Dora, Brady
 | When | Step | Output | Status |
 |---|---|---|---|
 | Sun Oct 18 | Research sprint | [research/sap-and-retail.md](research/sap-and-retail.md), [research/sources.md](research/sources.md) | First pass done |
-| Sun evening | Interview guide + outreach | research/interviews/ | To do |
-| Mon Oct 19 AM | 5–8 interviews | research/interviews/*.md | To do |
-| Mon midday | Pick one user + problem | research/interviews/synthesis.md | To do |
-| Mon PM | PRD-lite: problem, persona, workflow, 3 ranked features, before/after flow, business case | [prd/](prd/) | To do |
+| Sun evening | Interview guide + outreach | research/interviews/ | Done (Dora) |
+| Mon Oct 19 AM | Interviews | [research/interviews/](research/interviews/) | 3 Aritzia associates |
+| Mon midday | Pick one user + problem | [prd/voice-concept.md](prd/voice-concept.md) | **Locked:** targeted voice requests on SAP Joule → Business Data Cloud |
+| Mon PM | PRD-lite: problem, persona, workflow, 3 ranked features, before/after flow, business case | [prd/](prd/) | Concept done; business case to do |
 | Mon night | 3–4 low-fi screens for the video | Figma | To do |
-| Tue Oct 20 | PDF + 60-sec video, submit by 9 p.m. | [pitch/](pitch/) | To do |
+| Tue Oct 20 | One-page PDF + 60-sec video, submit by 9 p.m. | [pitch/](pitch/) | In progress |
 
 ### Phase 2: Summit (Oct 21–25, if we advance)
 
