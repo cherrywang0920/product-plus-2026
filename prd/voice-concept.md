@@ -6,7 +6,7 @@ Oct 19. Working name: **Joule Floor**, a voice-first assistant for store staff, 
 
 **Direction locked.** Problem: **slow, unreliable communication on the store floor.** Solution: **targeted voice requests built on SAP Joule's new voice capability, with every request feeding SAP Business Data Cloud.**
 
-**Update (Oct 20, Cherry): earpiece-only, no phone app.** Aritzia's floor culture is "hands busy", so the product lives in a company earpiece with a push-to-talk button, picked up at clock-in. Confirmation and status are spoken, not shown on a screen; CMT stays the system of record. The problem statement leads with money: **inefficient floor communication costs Aritzia sales now and margin later.** Where this doc says "phone", "app", "haptic" or "tap", read "earpiece" and "spoken". See [pitch/one-pager.md](../pitch/one-pager.md).
+**Update (Oct 20, Cherry): earpiece-only, no phone app.** Aritzia's floor culture is "hands busy", so the product lives in a company earpiece with a push-to-talk button, picked up at clock-in. Confirmation and status are spoken, not shown on a screen; CMT stays the system of record. The problem statement leads with money: **inefficient floor communication costs Aritzia sales now and margin later.** Where this doc says "phone", "app", "haptic" or "tap", read "earpiece" and "spoken". **Also (Oct 20):** always on with a mute button, no push-to-talk; a teammate's name or role at the start of speech triggers routing, all other speech is dropped on the device. Communication stays human to human: coworkers hear each other's voices, never an AI voice; AI only routes audio and transcribes requests for Business Data Cloud. See [pitch/one-pager.md](../pitch/one-pager.md).
 
 ## Problem framing
 
