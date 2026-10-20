@@ -160,10 +160,6 @@ All CAD, from Aritzia's FY26 figures [S17]. Everything else is labelled.
 | Clients feel listened to by an always-on mic | Name-triggered routing on the device; client conversation never leaves the earpiece or gets stored; mute button; privacy review with Aritzia before pilot [A] |
 | Wrong person triggered ("Dora will bring it" said to a client) | Short clip only reaches Dora, who ignores it; name detection tuned in pilot |
 | Boutique noise breaks detection | Mic close to the mouth; teammate names are a small, known vocabulary [A] |
-| Earpieces feel off-brand | Discreet single-ear design; pilot tests client and staff reaction |
-| Staff still shout at peak | Must beat shouting; stopwatch-tested in pilot |
-| Joule voice not GA until H2 2026 | Pilot via SAP early adopter program [S30] |
-| Noisy demand signal (one client asks 5 times) | Group by client session; allocator approves every move |
 
 **Pilot:** 3–5 Aritzia boutiques, 8 weeks, on Joule voice early access → all boutiques after GA.
 
