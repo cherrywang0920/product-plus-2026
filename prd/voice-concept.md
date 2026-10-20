@@ -6,6 +6,8 @@ Oct 19. Working name: **Joule Floor**, a voice-first assistant for store staff, 
 
 **Direction locked.** Problem: **slow, unreliable communication on the store floor.** Solution: **targeted voice requests built on SAP Joule's new voice capability, with every request feeding SAP Business Data Cloud.**
 
+**Update (Oct 20, Cherry): earpiece-only, no phone app.** Aritzia's floor culture is "hands busy", so the product lives in a company earpiece with a push-to-talk button, picked up at clock-in. Confirmation and status are spoken, not shown on a screen; CMT stays the system of record. The problem statement leads with money: **inefficient floor communication costs Aritzia sales now and margin later.** Where this doc says "phone", "app", "haptic" or "tap", read "earpiece" and "spoken". See [pitch/one-pager.md](../pitch/one-pager.md).
+
 ## Problem framing
 
 > Slow, unreliable communication on the store floor means two kinds of demand go unanswered: the client waiting in the fitting room now, and the pattern head office never sees because unmet requests are never recorded. We fix both with targeted voice requests on SAP's new Joule voice, feeding every request into SAP Business Data Cloud.
