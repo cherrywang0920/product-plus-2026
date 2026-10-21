@@ -1,0 +1,21 @@
+{
+  "_": "Cherry's draft1 cut (CapCut, 30 fps, 59.6 s), found by matching its frames to out/clips. Each row: clip, edit start (s), clip second at that start, clip second at its end.",
+  "fps": 30,
+  "end": 59.6,
+  "cuts": [
+    ["s01-hook", 0.0, 0.0, 6.96],
+    ["s02-cmt-no-alert", 7.0, 2.68, 14.08],
+    ["s03a-runner-hands-full", 18.43, 6.2, 8.68],
+    ["s03b-pocket-0-notifications", 20.97, 0, 2.4],
+    ["s04-walk-out-nothing-recorded", 23.43, 0, 3.36],
+    ["s06a-hey-brady", 27.2, 0, 4.6],
+    ["s06c-ear-in-hey-joule", 31.87, 4.76, 6.8],
+    ["s07-joule-stock", 33.97, 0.52, 4.6],
+    ["s08a-navy-okay", 38.07, 0.8, 3.04],
+    ["s08b-navy-perfect", 40.33, 0.52, 1.96],
+    ["s09b-handoff-short", 41.8, 1.2, 3.6],
+    ["s11-demand-data", 44.2, 0, 6.32],
+    ["s12-dashboard", 49.93, 0, 6.72],
+    ["s13-end", 56.1, 0, 5.88]
+  ]
+}
