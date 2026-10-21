@@ -1,9 +1,9 @@
 // Acted shots with overlays. One component per take in public/footage. Cues in ../timing.ts.
 import React from 'react';
 import { Audio, Easing, interpolate, Sequence, staticFile } from 'remotion';
-import { C, FONT, SHADOW } from '../brand';
+import { C, FONT, GLASS, SHADOW } from '../brand';
 import { T } from '../timing';
-import { BellOff, Bubble, Card, Check, Chip, clamp, EarGlow, Film, JouleMark, Pin, Said, Tap, Ticks, useInOut, useSec, Waves } from '../kit';
+import { BellOff, Bubble, Card, Check, Chip, clamp, EarGlow, Film, JouleMark, NameBadge, Pant, Person, Pin, Said, Tap, Ticks, useInOut, useSec, Waves } from '../kit';
 
 // ---------- 2–4 · shot2: Dora logs the retrieval in CMT, nothing happens, leaves the rooms ----------
 const CmtPhone: React.FC = () => {
@@ -55,24 +55,14 @@ const CmtPhone: React.FC = () => {
   );
 };
 
-/** Who Dora is, big on the clear wall: viewers outside Aritzia don't know what "AO" means. */
+/** Who Dora is, as a staff badge on the clear wall: viewers outside Aritzia don't know what "AO" means. */
 const IntroAO: React.FC = () => {
   const s = T.s2;
-  const { p, visible } = useInOut(s.intro, s.introOut);
-  if (!visible) return null;
   return (
-    <div style={{ position: 'absolute', left: 90, top: 250, width: 630, opacity: Math.min(1, p * 1.4), transform: `translateY(${(1 - p) * 40}px)`, fontFamily: FONT.sans }}>
-      <div style={{ display: 'inline-block', background: C.band, color: C.white, borderRadius: 999, padding: '10px 22px', fontSize: 26, fontWeight: 600, letterSpacing: 0.5 }}>
-        Saturday · 2:14 p.m. · peak hours
-      </div>
-      <div style={{ marginTop: 22, background: C.card, borderRadius: 28, padding: '34px 40px 38px', boxShadow: SHADOW, borderLeft: `8px solid ${C.blue}` }}>
-        <div style={{ fontSize: 26, fontWeight: 600, color: C.blue }}>Meet Dora</div>
-        <div style={{ fontFamily: FONT.title, fontSize: 60, fontWeight: 700, letterSpacing: -1.8, lineHeight: 1.05, marginTop: 6, color: C.ink }}>Atelier Operations (AO)</div>
-        <div style={{ fontSize: 32, lineHeight: 1.3, marginTop: 16, color: C.ink }}>
-          Runs Aritzia's fitting rooms: starts rooms for clients, then sends <b>runners</b> to fetch sizes from the floor.
-        </div>
-      </div>
-    </div>
+    <NameBadge x={90} top={150} w={630} start={s.intro} end={s.introOut} name="Dora" role="Atelier Operations · AO" avatar={C.navy}
+      desc={<>Runs the fitting rooms: starts rooms for clients, then sends <b>runners</b> to fetch sizes from the floor.</>}>
+      <div style={{ background: C.band, color: C.white, padding: '12px 30px', fontSize: 22, fontWeight: 600 }}>On shift · Saturday 2:14 p.m. · peak hours</div>
+    </NameBadge>
   );
 };
 
@@ -83,7 +73,7 @@ const ClientCaption: React.FC = () => {
   if (!visible) return null;
   return (
     <div style={{ position: 'absolute', right: 110, top: 330, width: 620, opacity: Math.min(1, p * 1.4), transform: `translateY(${(1 - p) * 30}px)`, fontFamily: FONT.sans }}>
-      <div style={{ background: C.card, borderRadius: 28, padding: '24px 32px 28px', boxShadow: SHADOW }}>
+      <div style={{ background: C.card, backdropFilter: GLASS, borderRadius: 28, padding: '24px 32px 28px', boxShadow: SHADOW }}>
         <div style={{ fontSize: 22, fontWeight: 600, letterSpacing: 1.2, color: C.mute }}>CLIENT · FITTING ROOM 3</div>
         <div style={{ fontSize: 46, fontWeight: 500, lineHeight: 1.2, letterSpacing: -0.5, marginTop: 8, color: C.ink }}>
           <Said text="“Could you grab me a size 6?”" start={s.client + 0.1} speak={s.clientSpeak} />
@@ -106,19 +96,26 @@ export const S02Cmt: React.FC = () => {
 };
 
 // ---------- 3 · shot3-1: Brady on the floor, hands full ----------
+/** Who Brady is, as a staff badge like Dora's: viewers don't know what a "runner" is either. */
 export const S03Runner: React.FC = () => {
   const s = T.s31;
   return (
     <Film src="shot3-1.mp4">
-      <Chip x={80} y={70} start={s.chip} size={28}>Brady · Runner · hands full</Chip>
-      <Card x={80} y={160} w={720} start={s.quote} end={s.quoteOut}>
-        <div style={{ display: 'flex', gap: 18 }}>
-          <div style={{ fontSize: 90, lineHeight: 0.8, fontWeight: 700, color: C.blue }}>“</div>
-          <div style={{ fontFamily: FONT.italic, fontStyle: 'italic', fontSize: 40, lineHeight: 1.22, letterSpacing: -0.4 }}>
-            Zero indicator of any notifications… unless you manually refresh.
+      <NameBadge x={70} top={125} w={640} start={s.chip} name="Brady" role="Runner · boutique associate" avatar={C.blue}
+        desc={<>Serves clients on the floor <b>and</b> fetches sizes for the fitting rooms, usually with hands full.</>} />
+      <Card x={70} y={540} w={680} start={s.quote} end={s.quoteOut}>
+        <div style={{ display: 'flex', gap: 20, alignItems: 'flex-start' }}>
+          <div style={{ flexShrink: 0, textAlign: 'center' }}>
+            <Person size={76} color="#8E9AAF" />
+            <div style={{ fontSize: 17, color: C.mute, fontWeight: 600, marginTop: 6 }}>Associate</div>
+          </div>
+          <div>
+            <div style={{ fontFamily: FONT.italic, fontStyle: 'italic', fontSize: 36, lineHeight: 1.22, letterSpacing: -0.4 }}>
+              “Zero indicator of any notifications… unless you manually refresh.”
+            </div>
+            <div style={{ marginTop: 12, fontSize: 20, color: C.mute, fontWeight: 500 }}>—Aritzia store associate · our interview, Oct 2026</div>
           </div>
         </div>
-        <div style={{ marginTop: 14, marginLeft: 66, fontSize: 21, color: C.mute, fontWeight: 500 }}>—Aritzia store associate · our interview, Oct 2026</div>
       </Card>
     </Film>
   );
@@ -144,59 +141,79 @@ export const S03Pocket: React.FC = () => {
 
 // ---------- 5–6 · shot6: "Hey Brady, size 6 in the black pant, room 3." ----------
 // "Hey Brady" opens a direct line: Brady lights up, a line draws Dora → Brady, the rest of the staff dim.
-const STAFF = ['Style advisor', 'Brady · Runner', 'Cash wrap', 'Stockroom', 'Floor lead'];
+// Everyone on the floor Dora could be calling: three runners (Brady is one), plus other roles.
+const STAFF = [
+  { name: 'Maya', role: 'Runner', color: '#8E9AAF' },
+  { name: 'Brady', role: 'Runner', color: C.blue },
+  { name: 'Leo', role: 'Runner', color: '#9C8B7A' },
+  { name: 'Sofia', role: 'Style advisor', color: '#A0A7B4' },
+  { name: 'Jin', role: 'Floor lead', color: '#7D8C99' },
+];
 const BRADY = 1;
 const ChannelPanel: React.FC = () => {
   const s = T.s6;
   const { t } = useSec();
   const { p, visible } = useInOut(s.panel, s.out);
   if (!visible) return null;
-  const W = 860, H = 520;
-  const dora = { x: 170, y: 255 };
-  const node = (i: number) => ({ x: 560, y: 100 + i * 78 });
-  const hl = interpolate(t, [s.hl, s.hl + 0.3], [0, 1], clamp); // Brady picked
+  const W = 860, H = 540;
+  const dora = { x: 700, y: 250 }; // right side, the side Dora stands on in the frame
+  const node = (i: number) => ({ x: 300, y: 104 + i * 80 });
+  const lock = interpolate(t, [s.hl, s.hl + 0.3], [0, 1], clamp); // Joule heard "Brady"
   const draw = interpolate(t, [s.line, s.line + 0.45], [0, 1], { ...clamp, easing: Easing.out(Easing.cubic) });
+  // before the name: Joule scans everyone, a highlight sweeping down and back up the list
+  const scanning = t < s.hl;
+  const sweep = ((t - s.panel) / 0.28) % (STAFF.length * 2 - 2);
+  const scanI = Math.round(sweep < STAFF.length ? sweep : STAFF.length * 2 - 2 - sweep);
   const b = node(BRADY);
   const len = Math.hypot(b.x - dora.x, b.y - dora.y);
   return (
-    <div style={{ position: 'absolute', left: 80, top: 110, width: W, height: H, opacity: Math.min(1, p * 1.4), transform: `translateY(${(1 - p) * 30}px)`, background: C.card, borderRadius: 26, boxShadow: SHADOW, fontFamily: FONT.sans, color: C.ink }}>
-      <div style={{ position: 'absolute', left: 36, top: 26, display: 'flex', alignItems: 'center', gap: 12, fontSize: 22, fontWeight: 600, letterSpacing: 1.5, color: C.mute }}>
-        <span style={{ width: 12, height: 12, borderRadius: '50%', background: hl > 0 ? C.blue : C.mute }} /> ATELIER CHANNEL · STORE 3 FLOOR
+    <div style={{ position: 'absolute', left: 80, top: 100, width: W, height: H, opacity: Math.min(1, p * 1.4), transform: `translateY(${(1 - p) * 30}px)`, background: C.card, backdropFilter: GLASS, borderRadius: 26, boxShadow: SHADOW, fontFamily: FONT.sans, color: C.ink }}>
+      <div style={{ position: 'absolute', left: 36, top: 24, right: 36, display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 22, fontWeight: 600, letterSpacing: 1.2 }}>
+        <span style={{ color: C.mute }}>ATELIER CHANNEL · FLOOR STAFF</span>
+        <span style={{ color: lock > 0.5 ? C.green : C.blue, display: 'flex', alignItems: 'center', gap: 8 }}>
+          {lock > 0.5 ? <><Check size={22} color={C.green} /> HEARD “BRADY”</> : <><span style={{ width: 10, height: 10, borderRadius: '50%', background: C.blue, opacity: 0.4 + 0.6 * Math.abs(Math.sin(t * 6)) }} /> FINDING WHO DORA MEANS…</>}
+        </span>
       </div>
       <svg width={W} height={H} style={{ position: 'absolute', inset: 0, overflow: 'visible' }}>
-        {/* faint "could go to anyone" lines, fading as Brady is picked */}
-        {STAFF.map((_, i) => i !== BRADY && (
-          <line key={i} x1={dora.x} y1={dora.y} x2={node(i).x} y2={node(i).y} stroke={C.line} strokeWidth={3} strokeDasharray="6 10" opacity={1 - hl} />
+        {/* scanning: a line to whoever Joule is checking; all faint lines fade once Brady is locked */}
+        {STAFF.map((_, i) => (
+          <line key={i} x1={node(i).x + 34} y1={node(i).y} x2={dora.x - 62} y2={dora.y} stroke={scanning && i === scanI ? C.blue : C.line} strokeWidth={scanning && i === scanI ? 4 : 3} strokeDasharray="6 9" opacity={(1 - lock) * (scanning && i === scanI ? 0.9 : 0.8)} />
         ))}
-        {/* the direct line */}
-        <line x1={dora.x} y1={dora.y} x2={b.x} y2={b.y} stroke={C.blue} strokeWidth={8} strokeLinecap="round" strokeDasharray={len} strokeDashoffset={len * (1 - draw)} />
+        {/* the direct line, Dora → Brady */}
+        <line x1={dora.x - 62} y1={dora.y} x2={b.x + 34} y2={b.y} stroke={C.blue} strokeWidth={8} strokeLinecap="round" strokeDasharray={len} strokeDashoffset={len * (1 - draw)} />
         {draw >= 1 && [0, 1, 2].map((k) => {
           const f = ((t - s.line - 0.45) / 0.9 + k / 3) % 1;
-          return <circle key={k} cx={dora.x + (b.x - dora.x) * f} cy={dora.y + (b.y - dora.y) * f} r={9} fill={C.white} stroke={C.blue} strokeWidth={4} opacity={Math.sin(f * Math.PI)} />;
+          return <circle key={k} cx={dora.x - 62 + (b.x + 34 - dora.x + 62) * f} cy={dora.y + (b.y - dora.y) * f} r={9} fill={C.white} stroke={C.blue} strokeWidth={4} opacity={Math.sin(f * Math.PI)} />;
         })}
       </svg>
-      {/* Dora */}
-      <div style={{ position: 'absolute', left: dora.x - 62, top: dora.y - 62, width: 124, height: 124, borderRadius: '50%', background: C.navy, color: C.white, display: 'grid', placeItems: 'center', fontFamily: FONT.title, fontSize: 52, fontWeight: 700 }}>D</div>
-      <div style={{ position: 'absolute', left: dora.x - 120, top: dora.y + 74, width: 240, textAlign: 'center', fontSize: 26, fontWeight: 600 }}>Dora · Atelier</div>
-      {/* staff */}
-      {STAFF.map((name, i) => {
+      {/* Dora, right */}
+      <div style={{ position: 'absolute', left: dora.x - 62, top: dora.y - 62 }}><Person size={124} color={C.navy} ring={C.navy} /></div>
+      <div style={{ position: 'absolute', left: dora.x - 110, top: dora.y + 70, width: 220, textAlign: 'center' }}>
+        <div style={{ fontSize: 28, fontWeight: 700 }}>Dora</div>
+        <div style={{ fontSize: 21, color: C.mute, fontWeight: 500 }}>Atelier ops</div>
+      </div>
+      {/* the floor staff, left: name and role to the left of each person */}
+      {STAFF.map((m, i) => {
         const n = node(i);
         const isB = i === BRADY;
-        const pulse = isB ? 1 + 0.18 * Math.sin(Math.min(1, hl) * Math.PI) : 1;
+        const checking = scanning && i === scanI;
+        const pulse = isB ? 1 + 0.16 * Math.sin(Math.min(1, lock) * Math.PI) : checking ? 1.08 : 1;
+        const dim = isB ? 1 : 1 - 0.6 * lock;
         return (
-          <div key={name} style={{ position: 'absolute', left: n.x - 32, top: n.y - 32, display: 'flex', alignItems: 'center', gap: 18, opacity: isB ? 1 : 1 - 0.6 * hl }}>
-            <div style={{ width: 64, height: 64, borderRadius: '50%', transform: `scale(${pulse})`, background: isB && hl > 0 ? C.blue : C.gray, border: `3px solid ${isB && hl > 0 ? C.blue : C.line}`, color: isB && hl > 0 ? C.white : C.mute, display: 'grid', placeItems: 'center', fontSize: 26, fontWeight: 700, boxShadow: isB ? `0 0 0 ${hl * 10}px rgba(59,133,238,0.22)` : undefined }}>
-              {name[0]}
+          <div key={m.name} style={{ position: 'absolute', left: 36, top: n.y - 34, width: n.x + 34 - 36, height: 68, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 16, opacity: dim }}>
+            {!isB && lock > 0.5 && <BellOff size={22} color={C.mute} />}
+            <div style={{ textAlign: 'right' }}>
+              <div style={{ fontSize: isB && lock > 0 ? 28 : 25, fontWeight: isB && lock > 0 ? 700 : 600, color: isB && lock > 0 ? C.blue : C.ink, lineHeight: 1.1 }}>{m.name}</div>
+              <div style={{ fontSize: 19, color: C.mute, fontWeight: 500 }}>{m.role}</div>
             </div>
-            <div style={{ fontSize: isB ? 30 : 24, fontWeight: isB ? 700 : 500, color: isB && hl > 0 ? C.blue : C.ink, whiteSpace: 'nowrap' }}>
-              {name}
-              {!isB && hl > 0.5 && <span style={{ marginLeft: 12, verticalAlign: 'middle', opacity: Math.min(1, (hl - 0.5) * 2) }}><BellOff size={22} color={C.mute} /></span>}
+            <div style={{ transform: `scale(${pulse})`, borderRadius: '50%', boxShadow: isB ? `0 0 0 ${lock * 10}px rgba(59,133,238,0.22)` : checking ? '0 0 0 6px rgba(59,133,238,0.2)' : undefined }}>
+              <Person size={68} color={isB && lock > 0 ? C.blue : m.color} ring={(isB && lock > 0) || checking ? C.blue : undefined} />
             </div>
           </div>
         );
       })}
-      <Fade start={s.direct} style={{ position: 'absolute', left: 36, bottom: 24, display: 'flex', alignItems: 'center', gap: 10, background: C.blue, color: C.white, borderRadius: 999, padding: '10px 22px', fontSize: 24, fontWeight: 600 }}>
-        <Tap size={24} /> Direct line: only Brady hears it · rest of the floor not interrupted
+      <Fade start={s.direct} style={{ position: 'absolute', left: 36, bottom: 22, display: 'flex', alignItems: 'center', gap: 10, background: C.blue, color: C.white, borderRadius: 999, padding: '10px 22px', fontSize: 23, fontWeight: 600 }}>
+        <Tap size={24} /> Direct line to Brady · the rest of the floor isn't interrupted
       </Fade>
     </div>
   );
@@ -265,20 +282,74 @@ export const S06EarIn: React.FC = () => {
 };
 
 // ---------- 7 · shot7: Joule answers with live stock ----------
-const StockRow: React.FC<{ item: string; where: string; tone: 'red' | 'blue'; start: number }> = ({ item, where, tone, start }) => {
-  const { p } = useInOut(start);
+/** Joule's answer as a picture: black 6 is out, navy 6 is on Rack B, and the way there. */
+const StockVisual: React.FC = () => {
+  const s = T.s7;
+  const { t } = useSec();
+  const { p, visible } = useInOut(s.card, s.out);
+  if (!visible) return null;
+  const stamp = interpolate(t, [s.soldOut, s.soldOut + 0.18], [1.8, 1], { ...clamp, easing: Easing.out(Easing.back(2)) });
+  const stampO = interpolate(t, [s.soldOut, s.soldOut + 0.1], [0, 1], clamp);
+  const navy = useInOutValue(t, s.navy);
+  const ok = interpolate(t, [s.navyOk, s.navyOk + 0.2], [0, 1], clamp);
+  const mapO = interpolate(t, [s.card + 0.2, s.card + 0.5], [0, 1], clamp); // the floor is there from the start; the route draws in later
+  const route = interpolate(t, [s.route, s.route + 0.7], [0, 1], { ...clamp, easing: Easing.inOut(Easing.cubic) });
+  const tile: React.CSSProperties = { flex: 1, borderRadius: 20, background: 'rgba(255,255,255,0.7)', border: `1.5px solid ${C.line}`, padding: '18px 20px', display: 'flex', alignItems: 'center', gap: 18, position: 'relative', overflow: 'hidden' };
+  const badge = (txt: string, bg: string) => <span style={{ position: 'absolute', left: 52, top: 92, background: bg, color: C.white, fontFamily: FONT.title, fontWeight: 700, fontSize: 26, borderRadius: 10, padding: '2px 10px' }}>{txt}</span>;
+  // the floor map, in the card's own pixels
+  const M = { w: 716, h: 200 };
+  const you = { x: 60, y: 150 }, rackB = { x: 400, y: 70 };
+  const pathD = `M ${you.x} ${you.y} L ${you.x + 140} ${you.y} L ${you.x + 140} ${rackB.y + 40} L ${rackB.x} ${rackB.y + 40} L ${rackB.x} ${rackB.y + 8}`;
   return (
-    <div style={{ opacity: Math.min(1, p * 1.4), transform: `translateX(${(1 - p) * -20}px)`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 0', borderTop: `1px solid ${C.line}` }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-        <span style={{ width: 18, height: 18, borderRadius: 6, background: item.startsWith('Black') ? '#111' : '#1F2B4A' }} />
-        <span style={{ fontSize: 30, fontWeight: 600 }}>{item}</span>
+    <div style={{ position: 'absolute', left: 80, top: 400, width: 780, opacity: Math.min(1, p * 1.4), transform: `translateY(${(1 - p) * 30}px)`, background: C.card, backdropFilter: GLASS, borderRadius: 26, boxShadow: SHADOW, padding: '22px 32px 26px', boxSizing: 'border-box', fontFamily: FONT.sans, color: C.ink }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+        <span style={{ fontSize: 22, fontWeight: 600, letterSpacing: 1.2, color: C.mute }}>LIVE STOCK · EFFORTLESS PANT · SIZE 6</span>
+        <span style={{ fontSize: 19, fontWeight: 600, color: C.blue, background: C.blueSoft, borderRadius: 999, padding: '5px 12px' }}>SAP S/4HANA</span>
       </div>
-      <span style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 26, fontWeight: 600, color: tone === 'red' ? C.red : C.blue }}>
-        {tone === 'blue' && <Pin size={26} />}{where}
-      </span>
+      <div style={{ display: 'flex', gap: 16 }}>
+        <div style={tile}>
+          <div style={{ position: 'relative' }}>
+            <div style={{ opacity: 1 - 0.55 * stampO }}><Pant color="#16181C" size={96} />{badge('6', '#16181C')}</div>
+            <svg width={96} height={120} viewBox="0 0 96 120" style={{ position: 'absolute', left: 0, top: 0, opacity: stampO, transform: `scale(${stamp})` }}>
+              <path d="M18 24 L78 96 M78 24 L18 96" stroke={C.red} strokeWidth={10} strokeLinecap="round" />
+            </svg>
+          </div>
+          <div>
+            <div style={{ fontFamily: FONT.title, fontSize: 32, fontWeight: 700 }}>Black</div>
+            <div style={{ display: 'inline-block', marginTop: 6, transform: `rotate(-6deg) scale(${stamp})`, opacity: stampO, border: `3px solid ${C.red}`, color: C.red, fontFamily: FONT.title, fontWeight: 800, fontSize: 24, letterSpacing: 1.5, padding: '1px 10px', borderRadius: 8, whiteSpace: 'nowrap' }}>SOLD OUT</div>
+            <div style={{ fontSize: 20, fontWeight: 600, color: C.mute, marginTop: 6 }}>Floor 0 · Back 0</div>
+          </div>
+        </div>
+        <div style={{ ...tile, opacity: navy, transform: `translateY(${(1 - navy) * 20}px)`, borderColor: ok > 0.5 ? C.green : C.line }}>
+          <div style={{ position: 'relative' }}><Pant color="#22325A" size={96} />{badge('6', '#22325A')}</div>
+          <div>
+            <div style={{ fontFamily: FONT.title, fontSize: 32, fontWeight: 700 }}>Navy</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 26, fontWeight: 700, color: C.green, marginTop: 4, opacity: ok }}><Check size={28} color={C.green} /> 2 on Rack B</div>
+          </div>
+        </div>
+      </div>
+      {/* where it is: a mini floor plan, the route from Brady to Rack B draws in */}
+      <div style={{ marginTop: 16, opacity: mapO, position: 'relative', height: M.h, borderRadius: 18, background: 'rgba(240,249,254,0.85)', border: `1.5px solid ${C.line}` }}>
+        <svg width={M.w} height={M.h} style={{ position: 'absolute', inset: 0 }}>
+          {[['A', 300], ['B', 400], ['C', 500]].map(([n, x]) => (
+            <g key={n as string}>
+              <rect x={(x as number) - 34} y={40} width={68} height={22} rx={6} fill={n === 'B' && route > 0.95 ? C.green : '#C8D3DE'} />
+              <text x={x as number} y={92} textAnchor="middle" fontSize={20} fontWeight={600} fill={n === 'B' ? C.ink : C.mute} fontFamily={FONT.sans}>Rack {n as string}</text>
+            </g>
+          ))}
+          <rect x={600} y={24} width={96} height={150} rx={12} fill="none" stroke="#B9C6D3" strokeWidth={2} strokeDasharray="6 6" />
+          <text x={648} y={104} textAnchor="middle" fontSize={18} fontWeight={600} fill={C.mute} fontFamily={FONT.sans}>Rooms</text>
+          <path d={pathD} fill="none" stroke={C.blue} strokeWidth={6} strokeLinecap="round" strokeLinejoin="round" strokeDasharray="1000" strokeDashoffset={1000 * (1 - route)} />
+          <circle cx={you.x} cy={you.y} r={14} fill={C.blue} />
+          <text x={you.x} y={you.y + 40} textAnchor="middle" fontSize={20} fontWeight={700} fill={C.blue} fontFamily={FONT.sans}>Brady</text>
+        </svg>
+        {route > 0.95 && <div style={{ position: 'absolute', left: rackB.x - 16, top: rackB.y - 58 }}><Pin size={34} color={C.green} /></div>}
+      </div>
     </div>
   );
 };
+const useInOutValue = (t: number, start: number) => interpolate(t, [start, start + 0.3], [0, 1], { ...clamp, easing: Easing.out(Easing.cubic) });
+
 export const S07Stock: React.FC = () => {
   const s = T.s7;
   const { fps } = useSec();
@@ -290,16 +361,9 @@ export const S07Stock: React.FC = () => {
         <Audio src={staticFile('audio/joule-stock.wav')} />
       </Sequence>
       <EarGlow x={s.ear.x} y={s.ear.y} start={s.glow} end={s.voice + s.voiceDur} />
-      <Bubble x={80} y={70} w={780} start={s.voice - 0.1} end={s.out} who="Joule" via="joule" text="Black 6 is sold out. Navy 6, two on rack B." speak={s.voiceDur - 0.2}
+      <Bubble x={80} y={60} w={780} start={s.voice - 0.1} end={s.out} who="Joule" via="joule" text="Black 6 is sold out. Navy 6, two on rack B." speak={s.voiceDur - 0.2}
         listen={{ src: 'audio/joule-stock.wav', audioAt: -(s.voice - s.voiceLead), from: s.voice, to: s.voice + s.voiceDur, status: 'Joule speaking', done: 'Answered from live stock' }} />
-      <Card x={80} y={470} w={780} start={s.map} end={s.out}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-          <span style={{ fontSize: 22, fontWeight: 600, letterSpacing: 1.2, color: C.mute }}>LIVE STOCK · THIS BOUTIQUE</span>
-          <span style={{ fontSize: 20, fontWeight: 600, color: C.blue, background: C.blueSoft, borderRadius: 999, padding: '6px 14px' }}>SAP S/4HANA</span>
-        </div>
-        <StockRow item="Black · size 6" where="Floor 0 · Back 0" tone="red" start={s.map + 0.3} />
-        <StockRow item="Navy · size 6" where="Rack B · 2" tone="blue" start={s.map + 0.8} />
-      </Card>
+      <StockVisual />
     </Film>
   );
 };

@@ -133,10 +133,13 @@ function cue(id, c, kind, gain = 0.5, pan = 0, arg) {
   if (t == null) return;
   put(SFX, t, typeof kind === 'string' ? S[kind](arg) : kind, gain, pan);
 }
-// 1 hook: the counter ticks, the number lands
-for (let c = 0.4, k = 0; c < 2.6; c += 0.045 + (c - 0.4) * 0.03, k++) cue('s01', c, 'tick', 0.25, 0, undefined);
-cue('s01', 3.2, 'impact', 0.55);
-cue('s01', 3.6, 'whoosh', 0.18, 0, 0.35);
+// 1 hook: ARITZIA lands, the facts pop in, the name shrinks away, the counter ticks, the number lands
+cue('s01', 0.05, 'impact', 0.35);
+[0.7, 0.85, 1.0].forEach((c, k) => cue('s01', c, 'pop', 0.14, [-0.3, 0, 0.3][k], [660, 784, 880][k]));
+cue('s01', 2.4, 'whoosh', 0.2, 0, 0.5);
+for (let c = 3.0; c < 4.3; c += 0.045 + (c - 3.0) * 0.05) cue('s01', c, 'tick', 0.25);
+cue('s01', 4.7, 'impact', 0.55);
+cue('s01', 5.0, 'whoosh', 0.18, 0, 0.35);
 // 2 the AO intro card, the client's caption, then phone out, typing, send
 cue('s02', 2.85, 'whoosh', 0.14, -0.4, 0.4);
 cue('s02', 3.15, 'pop', 0.14, 0.4, 700);
@@ -148,22 +151,26 @@ cue('s03b', 0.5, 'bonk', 0.4, 0.2);
 cue('s03b', 1.1, 'pop', 0.18, 0.3, 700);
 // 4 the wait ticks, the client leaves, sale lost
 for (let c = 0.2, k = 0; c < 1.6; c += 0.25, k++) cue('s04', c, 'clock', 0.22, -0.2, k % 2 === 0);
+cue('s04', 1.6, 'whoosh', 0.16, 0.3, 0.5); // the client walks out
 cue('s04', 1.9, 'thud', 0.6);
 cue('s04', 2.9, 'pop', 0.18, 0.2, 600);
 // into the drop
 put(SFX, ACT2 - 1.3, riser(1.3), 0.35); CUES.push(`${(ACT2 - 1.3).toFixed(2).padStart(7)}  riser    edit`);
 cue('s06a', 0.0, 'impact', 0.45);
-// 5–6 Joule hears "Hey Brady": listening earcon, Brady picked, line draws, logged
+// 5–6 Joule hears "Hey Brady": listening earcon, scanning the staff, locks on Brady, line draws, logged
 cue('s06a', 1.05, 'listen', 0.35, 0.2);
-cue('s06a', 1.45, 'pop', 0.3, -0.3, 1046);
-cue('s06a', 1.5, 'whoosh', 0.18, -0.2, 0.45);
-cue('s06a', 2.2, 'pop', 0.18, -0.3, 784);
+for (let c = 0.95; c < 1.6; c += 0.28) cue('s06a', c, 'tick', 0.16, -0.4);
+cue('s06a', 1.6, 'pop', 0.3, -0.3, 1046);
+cue('s06a', 1.65, 'whoosh', 0.18, -0.2, 0.45);
+cue('s06a', 2.3, 'pop', 0.18, -0.3, 784);
 cue('s06a', 3.3, 'confirm', 0.3, -0.3);
-// 6–7 Brady asks Joule; Joule answers; stock rows
+// 6–7 Brady asks Joule; Joule answers: SOLD OUT stamp, navy found, the route to Rack B
 cue('s06c', 5.25, 'listen', 0.35, -0.2);
 cue('s07', 1.05, 'listen', 0.25, -0.3);
-cue('s07', 2.3, 'pop', 0.2, -0.4, 660);
-cue('s07', 2.8, 'pop', 0.24, -0.4, 990);
+cue('s07', 2.0, 'thud', 0.3, -0.4);
+cue('s07', 2.55, 'pop', 0.2, -0.3, 880);
+cue('s07', 2.95, 'confirm', 0.24, -0.3);
+cue('s07', 3.15, 'whoosh', 0.16, -0.4, 0.7);
 // 8 navy?  navy's great → logged
 cue('s08a', 0.85, 'listen', 0.3, -0.2);
 cue('s08b', 1.55, 'confirm', 0.3, -0.2);

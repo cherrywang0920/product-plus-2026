@@ -8,17 +8,17 @@ Footage and renders are **not in Git** (`public/footage/`, `out/` are ignored).
 
 | Clip | Script row | Source take | What's on it |
 |---|---|---|---|
-| `s01-hook` | 1 | deck | Counter to ~$100M / year, estimate footnote with sources |
-| `s02-cmt-no-alert` | 2–4 | `shot2` | "Meet Dora · Atelier Operations (AO)" card explaining the role; caption for the off-camera client ("Could you grab me a size 6?"); CMT mock-up phone (typed request → sent → "no one notified"); red "Atelier leaves the rooms" at the walk-off |
-| `s03a-runner-hands-full` | 3 | `shot3.1` | "Brady · runner · hands full"; interview quote card |
+| `s01-hook` | 1 | deck | ARITZIA with three facts (144 boutiques, $3.70B FY26, on SAP since 2008), then the counter to ~$100M / year with the estimate footnote |
+| `s02-cmt-no-alert` | 2–4 | `shot2` | Dora's staff ID badge (Atelier Operations · AO, what the role does); caption for the off-camera client ("Could you grab me a size 6?"); CMT mock-up phone (typed request → sent → "no one notified"); red "Atelier leaves the rooms" at the walk-off |
+| `s03a-runner-hands-full` | 3 | `shot3.1` | Brady's staff ID badge (Runner, what a runner does); interview quote with a person icon |
 | `s03b-pocket-0-notifications` | 3 | `shot3.2` | Red "0 notifications" on the pocketed phone (take's sound muted) |
-| `s04-walk-out-nothing-recorded` | 4 | deck | CMT request card: wait ticks up, client leaves, "Recorded outcome: Nothing"; "Sale lost." |
-| `s06a-hey-brady` | 5–6 | `shot 6` | "Now, with Atelier, by Joule" title; earpiece glow; Dora's line as a bubble; "Logged in CMT" card |
+| `s04-walk-out-nothing-recorded` | 4 | deck | Room 3 drawn: client waiting for a size 6, wait timer, "0 runners notified"; client leaves, "Nothing" recorded; "Sale lost." |
+| `s06a-hey-brady` | 5–6 | `shot 6` | "Now, with Atelier, by Joule" title; channel panel (Joule scans the floor staff, locks on Brady when his name is heard, direct line drawn); Dora's line with a live voice wave; "Logged in CMT" |
 | `s06b-ear-out` | 6 | `shot6.1` | Sound waves leave Dora's earpiece; "Only Brady hears it" |
 | `s06c-ear-in-hey-joule` | 6–7 | `shot6.2 and 7.1` | Waves land in Brady's ear; "New request" card; "Hey Joule, do we have it?" |
-| `s07-joule-stock` | 7 | `shot7` | Joule's answer; live-stock card (S/4HANA) |
-| `s08a-navy-okay` | 8 | `shot8.1` | "Hey Dora, navy okay?" |
-| `s08b-navy-perfect` | 8 | `shot8.2` | "Navy's perfect." + "Substitute accepted · logged" |
+| `s07-joule-stock` | 7 | `shot7` | Joule's voice (Kokoro TTS) and bubble with voice wave; stock picture: black 6 SOLD OUT, navy 6 on Rack B, route drawn on a floor map |
+| `s08a-navy-okay` | 8 | `shot8.1` | "Hey Dora, does navy size 6 work?" with voice wave |
+| `s08b-navy-perfect` | 8 | `shot8.2` | "Navy's great!" with voice wave → "Substitute accepted · logged" |
 | `s09a-handoff-long` | 9–10 | `shot9.1` | "On its way" card; three ticks at the hand-off |
 | `s09b-handoff-short` | 9–10 | `shot9.2` | Same, for the shorter take (pick one) |
 | `s11-demand-data` | 11 | frozen `shot9.2` | Tags lift out and fly into SAP Business Data Cloud |
@@ -29,7 +29,7 @@ Film clips run the full take with the take's own sound; trim in the editor. Bubb
 
 ## The finished cut and its sound
 
-- `final-cut` (composition) rebuilds Cherry's CapCut draft (`draft1.mp4`) from the rendered clips: the cut list is `src/edit.json`, found by matching the draft's frames to the clips (`scripts/match-edit.mjs`).
+- `final-cut` (composition) rebuilds Cherry's CapCut draft (`draft1.mp4`, since removed) from the rendered clips; the submitted video is its output (`atelier-final-v7.mp4`): the cut list is `src/edit.json`, found by matching the draft's frames to the clips (`scripts/match-edit.mjs`).
 - `scripts/sound-design.mjs` writes the soundtrack for that cut (`out/sound/`): music with a tense pulse that drops into a beat on "Atelier, by Joule"; UI sound effects on the on-screen moments. The music ducks under the dialogue, measured from the draft's audio.
 - `scripts/master.mjs` lifts the final mix 5 dB with a peak limiter at −1 dBFS.
 

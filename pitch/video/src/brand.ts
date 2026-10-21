@@ -20,7 +20,7 @@ export const C = {
   tint: '#F0F9FE', // light-blue callout boxes
   gray: '#F2F3F4', // cards and sidebar
   white: '#FFFFFF',
-  card: 'rgba(255,255,255,0.96)',
+  card: 'rgba(255,255,255,0.88)', // see-through white over footage, always with GLASS behind it
   ink: '#1A2835',
   mute: '#646C73',
   line: '#DCE1E6',
@@ -29,4 +29,6 @@ export const C = {
   redSoft: 'rgba(208,52,44,0.12)',
 };
 
+/** frosted glass behind the see-through cards */
+export const GLASS = 'blur(16px) saturate(140%)';
 export const SHADOW = '0 18px 50px rgba(10,30,60,0.28), 0 4px 12px rgba(10,30,60,0.16)';

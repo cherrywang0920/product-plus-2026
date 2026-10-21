@@ -2,7 +2,7 @@
 import React from 'react';
 import { AbsoluteFill, Easing, interpolate, OffthreadVideo, spring, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
 import { useAudioData } from '@remotion/media-utils';
-import { C, FONT, SHADOW } from './brand';
+import { C, FONT, GLASS, SHADOW } from './brand';
 
 export const useSec = () => {
   const frame = useCurrentFrame();
@@ -37,7 +37,7 @@ export const Card: React.FC<{ x: number; y: number; w?: number; start: number; e
   return (
     <div style={{ position: 'absolute', left: x, top: y, width: w, opacity: Math.min(1, p * 1.4), transform: `${tr} scale(${0.96 + 0.04 * p})`, transformOrigin: 'left center',
       background: dark ? 'rgba(26,40,53,0.92)' : C.card, color: dark ? C.white : C.ink, borderRadius: 22, padding: '22px 28px', boxShadow: SHADOW,
-      fontFamily: FONT.sans, backdropFilter: 'blur(8px)' }}>
+      fontFamily: FONT.sans, backdropFilter: GLASS }}>
       {children}
     </div>
   );
@@ -135,7 +135,7 @@ export const Bubble: React.FC<{ x: number; y: number; w: number; start: number; 
   const isJoule = via === 'joule';
   return (
     <div style={{ position: 'absolute', left: x, top: y, width: w, opacity: Math.min(1, p * 1.4), transform: `translateY(${(1 - p) * 30}px) scale(${0.95 + 0.05 * p})`, transformOrigin: tail === 'left' ? 'left bottom' : 'right bottom' }}>
-      <div style={{ background: isJoule ? 'rgba(28,80,148,0.96)' : C.card, color: isJoule ? '#fff' : C.ink, borderRadius: 28, padding: '22px 30px 26px', boxShadow: SHADOW, borderLeft: `6px solid ${C.blue}`, fontFamily: FONT.sans }}>
+      <div style={{ background: isJoule ? 'rgba(28,80,148,0.84)' : C.card, color: isJoule ? '#fff' : C.ink, borderRadius: 28, padding: '22px 30px 26px', boxShadow: SHADOW, borderLeft: `6px solid ${C.blue}`, fontFamily: FONT.sans, backdropFilter: GLASS }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 22, fontWeight: 600, letterSpacing: 1.2, textTransform: 'uppercase', color: isJoule ? '#BFD8FF' : C.blue, marginBottom: 8 }}>
           {isJoule ? <JouleMark size={24} /> : <Wave size={24} color={C.blue} />}
           {who}
@@ -204,7 +204,7 @@ export const Ticks: React.FC<{ x: number; y: number; items: string[]; start: num
 const TickRow: React.FC<{ text: string; start: number; end?: number }> = ({ text, start, end }) => {
   const { p, visible } = useInOut(start, end);
   return (
-    <div style={{ opacity: visible ? Math.min(1, p * 1.4) : 0, transform: `translateX(${(1 - p) * -30}px)`, display: 'flex', alignItems: 'center', gap: 18, background: C.card, borderRadius: 999, padding: '16px 34px 16px 18px', boxShadow: SHADOW, fontFamily: FONT.sans, fontWeight: 600, fontSize: 40, color: C.ink, width: 'fit-content' }}>
+    <div style={{ opacity: visible ? Math.min(1, p * 1.4) : 0, transform: `translateX(${(1 - p) * -30}px)`, display: 'flex', alignItems: 'center', gap: 18, background: C.card, backdropFilter: GLASS, borderRadius: 999, padding: '16px 34px 16px 18px', boxShadow: SHADOW, fontFamily: FONT.sans, fontWeight: 600, fontSize: 40, color: C.ink, width: 'fit-content' }}>
       <span style={{ width: 50, height: 50, borderRadius: '50%', background: C.blue, display: 'grid', placeItems: 'center' }}><Check size={30} color="#fff" /></span>
       {text}
     </div>
@@ -233,3 +233,64 @@ export const Tap: React.FC<{ size?: number; color?: string }> = ({ size = 28, co
 export const JouleMark: React.FC<{ size?: number; color?: string }> = ({ size = 28, color = '#BFD8FF' }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill={color}><path d="M12 1.5c.6 4.9 2.8 8.3 9 10.5-6.2 2.2-8.4 5.6-9 10.5-.6-4.9-2.8-8.3-9-10.5 6.2-2.2 8.4-5.6 9-10.5z" /></svg>
 );
+
+/** A simple person icon (head + shoulders), so each node reads as a different person. */
+export const Person: React.FC<{ size: number; color: string; ring?: string }> = ({ size, color, ring }) => (
+  <svg width={size} height={size} viewBox="0 0 64 64" style={{ display: 'block', overflow: 'visible' }}>
+    <circle cx={32} cy={32} r={31} fill={C.white} stroke={ring ?? C.line} strokeWidth={ring ? 4 : 2} />
+    <clipPath id={`clip-${size}-${color}`}><circle cx={32} cy={32} r={29} /></clipPath>
+    <g clipPath={`url(#clip-${size}-${color})`} fill={color}>
+      <circle cx={32} cy={25} r={11} />
+      <path d="M10 62c0-13 10-21 22-21s22 8 22 21z" />
+    </g>
+  </svg>
+);
+/** Pants, drawn simply, in the colour asked for. */
+export const Pant: React.FC<{ color: string; size?: number }> = ({ color, size = 120 }) => (
+  <svg width={size} height={size * 1.25} viewBox="0 0 80 100">
+    <path d="M14 4h52l6 92H50L40 34 30 96H8z" fill={color} />
+    <path d="M14 4h52v8H14z" fill="rgba(255,255,255,0.18)" />
+  </svg>
+);
+
+/** A staff ID badge on a lanyard: who this person is, at a glance. It swings in from the top and settles.
+ *  top = where the badge itself starts; the lanyard runs up out of frame. */
+export const NameBadge: React.FC<{ x: number; top: number; w: number; start: number; end?: number; name: string; role: string; desc: React.ReactNode; avatar: string; children?: React.ReactNode }> = ({ x, top, w, start, end, name, role, desc, avatar, children }) => {
+  const { frame, fps, t } = useSec();
+  const { p, visible } = useInOut(start, end);
+  if (!visible) return null;
+  // a damped swing about the lanyard's top
+  const k = Math.max(0, t - start);
+  const swing = -9 * Math.exp(-k * 3.2) * Math.cos(k * 9);
+  const drop = (1 - spring({ frame: frame - Math.round(start * fps), fps, config: { damping: 16, stiffness: 120 } })) * -260;
+  return (
+    <div style={{ position: 'absolute', left: x, top: 0, width: w, height: top + 600, opacity: Math.min(1, p * 1.6), transformOrigin: `${w / 2}px 0px`, transform: `translateY(${drop}px) rotate(${swing}deg)`, fontFamily: FONT.sans }}>
+      {/* lanyard: two straps meeting at the clip */}
+      <svg width={w} height={top + 10} style={{ position: 'absolute', left: 0, top: 0 }}>
+        <path d={`M ${w / 2 - 70} 0 L ${w / 2 - 12} ${top - 34} L ${w / 2 + 12} ${top - 34} L ${w / 2 + 70} 0 Z`} fill={C.navy} />
+        <path d={`M ${w / 2 - 70} 0 L ${w / 2 - 12} ${top - 34}`} stroke="rgba(255,255,255,0.35)" strokeWidth={3} />
+        <rect x={w / 2 - 20} y={top - 40} width={40} height={30} rx={8} fill="#B9C2CC" stroke="#8E99A6" strokeWidth={2} />
+        <rect x={w / 2 - 6} y={top - 14} width={12} height={22} rx={4} fill="#8E99A6" />
+      </svg>
+      <div style={{ position: 'absolute', left: 0, top, width: w, background: 'rgba(255,255,255,0.94)', backdropFilter: GLASS, borderRadius: 26, boxShadow: SHADOW, overflow: 'hidden' }}>
+        <div style={{ height: 64, background: C.navy, color: C.white, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 28px', fontSize: 21, fontWeight: 700, letterSpacing: 2.5 }}>
+          <span>ATELIER · STAFF ID</span>
+          <span style={{ width: 70, height: 14, borderRadius: 7, background: 'rgba(255,255,255,0.28)', position: 'absolute', left: w / 2 - 35, top: 12 }} />
+          <JouleMark size={24} color="#BFD8FF" />
+        </div>
+        <div style={{ display: 'flex', gap: 26, alignItems: 'center', padding: '26px 30px 18px' }}>
+          <div style={{ width: 132, height: 156, borderRadius: 16, background: C.tint, border: `2px solid ${C.line}`, display: 'grid', placeItems: 'center', flexShrink: 0 }}>
+            <Person size={112} color={avatar} />
+          </div>
+          <div>
+            <div style={{ fontSize: 22, fontWeight: 600, color: C.mute }}>Hello, I'm</div>
+            <div style={{ fontFamily: FONT.title, fontSize: 68, fontWeight: 800, letterSpacing: -2, lineHeight: 1, color: C.ink }}>{name}</div>
+            <div style={{ display: 'inline-block', marginTop: 12, background: C.blue, color: C.white, borderRadius: 999, padding: '7px 18px', fontSize: 25, fontWeight: 700 }}>{role}</div>
+          </div>
+        </div>
+        <div style={{ borderTop: `1.5px dashed ${C.line}`, margin: '0 30px', padding: '16px 0 24px', fontSize: 27, lineHeight: 1.3, color: C.ink }}>{desc}</div>
+        {children}
+      </div>
+    </div>
+  );
+};
