@@ -118,18 +118,58 @@ All USD. The brief's Aritzia business case is in CAD; keep the two separate or c
 | Fashion retailers with stores, on SAP, still on ECC | ~150–200 | [A] ~half or more of 300+ AFS customers have their own stores [S41, A]. Replace with a named list (§9) |
 | Share Atelier gets to move sooner | 5% low / 10% base | [A] |
 | Extra yearly revenue when one moves to cloud ERP | $0.5–2M | Cloud ERP (RISE) contracts run ~$0.5–5M a year [S42, weak], minus the support fee already paid [A] |
-| Atelier subscription per retailer | $1–3M a year | ~100–150 stores × $1,500 per store per month [A] |
+| Atelier subscription per retailer | ~$0.9–1.4M a year | ~100–150 stores × $750 per store per month, bundled with the upgrade (§8a) [A]. Same nominal price as the CAD Aritzia case, a simplification |
 
 | Scenario | Retailers moved | Added yearly revenue for SAP | Over a 5-year contract |
 |---|---|---|---|
-| Low | 10 | ~$15–50M [C] | ~$75–250M [C] |
-| Base | 20 | ~$30–100M [C] | ~$150–500M [C] |
+| Low | 10 | ~$14–34M [C] | ~$70–170M [C] |
+| Base | 20 | ~$28–67M [C] | ~$140–335M [C] |
 
-**Framing for judges.** Next to SAP's €36.8B revenue this looks small, so compare it to **SAP's cost to build Atelier**: ~8 people × 9 months ≈ $1.5–2M at a loaded ~$250–330k per person-year [A]. The low case alone returns ~7× that build cost every year. That answers "not justified for the investment" directly.
+**Framing for judges.** Next to SAP's €36.8B revenue this looks small (and it's lower since we cut Atelier's price on Oct 23; most of it is now the cloud ERP move), so compare it to **SAP's cost to build Atelier**: ~8 people × 9 months ≈ $1.5–2M at a loaded ~$250–330k per person-year [A]. The low case alone returns ~7× that build cost every year. That answers "not justified for the investment" directly.
 
 **Upside, unquantified:** other assisted-selling retail (footwear first: almost every sale involves fetching a size from the back); customers kept from leaving for third-party support.
 
 **Weakest input:** the number of fashion retailers on ECC. Everything else scales from it.
+
+## 8a. What Atelier is worth to Aritzia (revised Oct 23)
+
+Replaces the brief's §9 numbers. All CAD. Two changes: Atelier is priced as part of the cloud ERP upgrade, and better forecasting is counted as its own benefit.
+
+**Costs**
+
+| Cost | Brief | Revised | Basis |
+|---|---|---|---|
+| Software | $1,500/boutique/month = $2.6M/yr | **$750/boutique/month = $1.3M/yr** | 50% bundle discount with the upgrade [A]; some platform and data costs may sit inside the upgrade's included credits (verify) |
+| Integration | $1.5–3M once | **$0.75–1.5M once** | Done inside the migration Aritzia must do anyway [A] |
+| Earpieces | ~$0.07M once | ~$0.07M once | Brief |
+| Training | ~$0.13M | ~$0.13M | Brief |
+| **Year 1 total** | $4.3–5.8M | **~$2.2–3.0M** [C] | |
+
+The upgrade itself is not an Atelier cost: ECC support ends in 2027 [S32], so Aritzia moves regardless.
+
+**Benefits**
+
+| Benefit | Calculation | Per year |
+|---|---|---|
+| Recovered floor sales | As brief §9 | $2.2–4.4M |
+| In-season transfers → fewer markdowns | As brief §9: +0.1–0.25 margin pts [A] | $3.7–9.3M |
+| **Better forecasts and buying (new)** | Voice data adds demand that sales data misses (censored demand, reasons), improving next season's buy and replenishment company-wide, including online. Anchor: Aritzia's GM fell to 38.5% in FY24 on "earlier and heavier" inventory and recovered to 44.9% in FY26 on lower markdowns [S17, S18], a 6.4-pt swing. Assume better demand data prevents 5–10% of a swing like that = +0.3–0.6 pts [A] × $37M per pt [C] | **$11.1–22.2M** |
+| Runner time | As brief §9 | $1.1M |
+| **Total, from year 2** | | **~$18–37M** [C] |
+
+**No double count:** transfers fix this season's stock; better forecasts fix next season's buy. Together +0.4–0.85 pts, 6–13% of the FY24 swing. The swing has other causes too (not separated), which is why we claim only a small share.
+
+**Results** [C]
+
+| | Brief | Revised |
+|---|---|---|
+| Payback | 4–10 months | **~2–5 months** (year 1 counts only floor + transfer benefits, $7–15M; forecasting needs a season of data) |
+| Three-year net | $10–35M | **~$38–84M** |
+| Per boutique per year | $18k software vs $49–104k benefit | **~$9k software vs ~$126–257k benefit** (from year 2) |
+| Break-even | +0.07 margin pts | Breaks even if ~4–7% of the projected benefit shows up |
+| Return per $1 (don't headline) | $2.70–5.80 | $14–28 |
+
+**Biggest assumptions:** the 50% bundle discount, and the 5–10% share of the swing.
 
 ## 9. To do before semis
 

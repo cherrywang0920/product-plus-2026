@@ -12,9 +12,9 @@ Every section has to serve this sentence. The Arena version told a communication
 
 | Feedback | Answered in |
 |---|---|
-| Misread the case; expand beyond one customer | Problem (P2–P3) frames it as demand that never reaches planning; A2 and SAP-1 expand to fashion retailers on SAP |
+| Misread the case; expand beyond one customer | Problem (P2–P3) frames it as demand that never reaches planning; R2 and SAP-1 expand to fashion retailers on SAP |
 | Tie features back to the problem | Solution (S2): each feature mapped to a pain **and** to the demand signal it creates |
-| Not big enough for SAP's investment | SAP-1 to SAP-5: value to SAP by panel role, vs build cost |
+| Not big enough for SAP's investment | SAP-1 to SAP-3: value to SAP by panel role, vs build cost |
 | Keep: interviews, stats, video | Problem (P3) keeps quotes; hook reuses the video's characters |
 
 ## Running order (8:00)
@@ -27,10 +27,10 @@ Team structure (Oct 23): **problem → solution → implementation plan (prototy
 | 0:20–1:30 | **Problem** | P1–P3 | Dora / Brady | Problem Definition 20% |
 | 1:30–2:20 | **Solution** | S1–S3 | Dora / Brady | Product Solution 20% |
 | 2:20–4:50 | **Implementation plan + prototype demo** | live demo + pilot plan | Dora / Brady | Prototype 20%, Implementation 10% |
-| 4:50–7:45 | **Stakeholders → Aritzia / fashion retail → SAP** | K1, A1–A2, SAP-1 to SAP-5 | Cherry | Stakeholder 20%, Solution (value vs cost), Implementation |
+| 4:50–7:45 | **Stakeholders → Aritzia / fashion retail → SAP** | K1, R1–R2, SAP-1 to SAP-3 | Cherry | Stakeholder 20%, Solution (value vs cost), Implementation |
 | 7:45–8:00 | **Close + ask** | C1 | Cherry | Presentation |
 
-The SAP part is broken down by the four panel roles (strategy, finance, engineering, marketing), then a trade-offs slide. Detail: [business-slides-plan.md](business-slides-plan.md).
+The SAP part is broken down by panel role: strategy + go-to-market, finance, technology. Each ends with its trade-off; the full trade-off table is in the appendix. Detail: [business-slides-plan.md](business-slides-plan.md).
 
 ## One scenario through the whole deck
 
@@ -77,11 +77,11 @@ Two halves, continuing the hook scenario:
 
 Optional, if time allows: the try-on vs conversion view (product vs placement problem).
 
-### K1 → SAP-5. Stakeholders and value (~3:00)
+### K1 → SAP-3. Stakeholders and value (~2:30)
 See [business-slides-plan.md](business-slides-plan.md):
-- K1 stakeholder map (Aritzia ring, SAP ring)
-- A1 Aritzia pays back in year one; A2 every assisted-selling floor has the same blind spot
-- SAP-1 strategy, SAP-2 finance, SAP-3 engineering, SAP-4 marketing, SAP-5 trade-offs + limitations
+- K1 stakeholder map (Aritzia, fashion retail, SAP)
+- R1 Aritzia: pays for itself within the first season, ~CAD $18–37M a year once forecasts use the data; R2 fashion retail: every assisted-selling floor has the same blind spot
+- SAP-1 strategy + go-to-market, SAP-2 finance (with limitations), SAP-3 technology (Joule voice's real-world testbed); trade-offs as one line per slide
 
 ### C1. Close and ask (15 s)
 **"Green-light an 8-week pilot in 5 Aritzia boutiques."** One callback to the hook: "next time Maya says sorry, head office will hear it."
@@ -113,5 +113,5 @@ Prepared answers per judge role: [business-slides-plan.md](business-slides-plan.
 - [ ] Agree the implementation split: prototype + pilot plan + pilot metrics (Dora / Brady) vs build phases, costs, SAP metrics (Cherry)
 - [ ] Who owns the hook and the demo, and who builds the prototype (earpiece simulation + dashboard)
 - [ ] Is the dashboard the demo hero? Recommended: yes, it's the part that answers the feedback
-- [ ] Does P1 stay Aritzia-only, with expansion saved for A2 / SAP-1? Recommended: yes. The rubric wants a specific user; the judges want breadth, and A2 gives it
+- [ ] Does P1 stay Aritzia-only, with expansion saved for R2 / SAP-1? Recommended: yes. The rubric wants a specific user; the judges want breadth, and R2 gives it
 - [ ] Timed run-through by Oct 24 evening
