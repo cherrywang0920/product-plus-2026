@@ -71,9 +71,11 @@ Two things live elsewhere:
 
 - **Callout names on the 3D model** ("Ear hook", "Mute", …) are the `text` fields in the
   `LABELS` array at the top of `src/main.js`.
-- **How long a section lasts** is `style="--h:155svh"` on its `<section>`. Bigger = more
-  scrolling spent there. The camera and the button presses retime themselves automatically,
-  so stretching the mute section just slows that press down; it won't desync.
+- **How long a section lasts** is `style="--h:310svh"` on its `<section>`. The card stays
+  pinned for `--h` minus one screen, then slides away over the last screen. So `--h:310svh`
+  pins for about 2.1 screens of scrolling. Raising it gives you longer on that control;
+  the camera and the button presses retime themselves off it, so nothing desyncs.
+  Don't go below about `140svh`, or there's barely any pinned phase left.
 
 Use `&rsquo;` for apostrophes, `&mdash;` for em dashes, `&middot;` for the dot separator.
 
@@ -86,22 +88,30 @@ Use `&rsquo;` for apostrophes, `&mdash;` for em dashes, `&middot;` for the dot s
 
 ## How the scroll timeline works
 
+Each section has **two phases**, and the writing is pinned for the first one:
+
+1. **Pinned.** The card sticks in place and the camera holds on the part, while the control
+   actuates. This lasts `height − one viewport` of scroll.
+2. **Hand-off.** The card slides away, the next one rises, and the camera travels to the
+   next part. This lasts exactly one viewport of scroll.
+
+So every press, sweep and colour change finishes while its text is still on screen.
+
 Everything keys off one scalar, `u`: its integer part is the active step, its fraction is
 progress through that step. Scrolling back up replays the whole thing in reverse, which is
-why nothing is written as a one-shot animation.
+why nothing is written as a one-shot animation. Within a step, `pinProgress()` rescales
+that to 0→1 across the pinned phase, and the animations are written against *that* — which
+is why they stay in sync when a section's length changes.
 
-| `u` | Step | What actuates |
-|---|---|---|
-| 0 | Hero | slow camera sway |
-| 1 | Anatomy | seven callouts projected from true part coordinates |
-| 2 | Power | button presses at `u≈2.36`, light comes up at `u≈2.40` and stays lit |
-| 3 | Volume | dial sweeps to 9, settles back to 6 |
-| 4 | Mute | presses at `u≈4.22` → muted/amber; presses again at `u≈4.54` → live |
-| 5 | In use | the AO → BA hand-off |
-| 6 | Close | hand-off becomes data in SAP Business Data Cloud |
-
-The camera holds on each part for the first ~62% of a step, then travels, so presses land
-on a still frame rather than mid-move.
+| Step | Track | Pinned | What actuates while pinned |
+|---|---|---|---|
+| 0 Hero | 150svh | 33% | slow camera sway |
+| 1 Anatomy | 230svh | 57% | seven callouts projected from true part coordinates |
+| 2 Power | 250svh | 60% | button presses, light comes up and stays lit |
+| 3 Volume | 270svh | 63% | dial sweeps 4 → 9, settles at 6 |
+| 4 Mute | 310svh | 68% | presses → amber, holds, presses again → live |
+| 5 In use | 220svh | 55% | the hand-off exchange |
+| 6 Close | 170svh | 41% | final frame, stays put to the end |
 
 ## Coordinates
 

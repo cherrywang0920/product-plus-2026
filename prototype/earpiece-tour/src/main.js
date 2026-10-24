@@ -326,14 +326,22 @@ function initScene() {
 
 const plates = Array.from(document.querySelectorAll('.plate'));
 let anchors = [];
+let pinned = [];
 
 function measure() {
   const vh = window.innerHeight;
-  anchors = plates.map((p) => {
-    const r = p.getBoundingClientRect();
-    return r.top + window.scrollY + r.height / 2 - vh / 2;
+  anchors = plates.map((p) => p.getBoundingClientRect().top + window.scrollY);
+  // A plate's card is stuck for (height - one viewport) of scroll, then slides
+  // away over the last viewport. Everything times off that fraction, so
+  // changing a plate's --h retimes its animation instead of desyncing it.
+  pinned = plates.map((p) => {
+    const h = p.getBoundingClientRect().height;
+    return h > 0 ? Math.max(0.12, Math.min(0.92, (h - vh) / h)) : 0.62;
   });
 }
+
+/** Progress through step `k`'s pinned phase: 0 before it, 1 once it releases. */
+const pinProgress = (u, k) => clamp01((u - k) / (pinned[k] || 0.62));
 
 function computeU() {
   if (anchors.length < 2) return 0;
@@ -393,34 +401,35 @@ let lastLevel = -1;
 let lastPower = null;
 let lastMic = null;
 
-function frame() {
-  const dt = Math.min(clock.getDelta(), 0.05);
+function frame(dtOverride) {
+  const dt = dtOverride !== undefined ? dtOverride : Math.min(clock.getDelta(), 0.05);
   const t = clock.elapsedTime;
   const u = computeU();
 
   /* ----- state driven by scroll ----- */
-  const f2 = clamp01(u - 2);
-  const f3 = clamp01(u - 3);
-  const f4 = clamp01(u - 4);
+  const p2 = pinProgress(u, 2);
+  const p3 = pinProgress(u, 3);
+  const p4 = pinProgress(u, 4);
 
-  const powerOn = smoothstep(0.34, 0.44, f2);
-  const powerPress = pulse(f2, 0.36, 0.05, 0.10);
+  const powerOn = smoothstep(0.50, 0.66, p2);
+  const powerPress = pulse(p2, 0.54, 0.09, 0.16);
 
   // Resting level, then the dial sweeps up and settles back at 6.
   const VOL_REST = 0.4;
-  const volume = f3 < 0.42
-    ? lerp(VOL_REST, 0.95, smoothstep(0.10, 0.42, f3))
-    : lerp(0.95, 0.62, smoothstep(0.42, 0.62, f3));
+  const volume = p3 < 0.62
+    ? lerp(VOL_REST, 0.95, smoothstep(0.14, 0.62, p3))
+    : lerp(0.95, 0.62, smoothstep(0.62, 0.90, p3));
 
-  const muted = clamp01(smoothstep(0.20, 0.27, f4) - smoothstep(0.52, 0.59, f4));
-  const mutePress = Math.max(pulse(f4, 0.22, 0.045, 0.09), pulse(f4, 0.54, 0.045, 0.09));
+  // Pressed on, held amber long enough to read, then pressed off again.
+  const muted = clamp01(smoothstep(0.28, 0.36, p4) - smoothstep(0.70, 0.78, p4));
+  const mutePress = Math.max(pulse(p4, 0.30, 0.07, 0.14), pulse(p4, 0.72, 0.07, 0.14));
 
   /* ----- camera ----- */
   const i = Math.min(STEPS.length - 1, Math.floor(u));
   const j = Math.min(STEPS.length - 1, i + 1);
   const f = u - i;
-  // Hold on the part for the first ~62% of a step, then travel.
-  const e = smoothstep(0.62, 1.0, f);
+  // Hold while the card is pinned; travel while it slides away.
+  const e = smoothstep(pinned[i] || 0.62, 1.0, f);
 
   wantTgt.fromArray(STEPS[i].target).lerp(B.fromArray(STEPS[j].target), e);
   wantPos.fromArray(STEPS[i].pos).lerp(B.fromArray(STEPS[j].pos), e);
@@ -486,7 +495,7 @@ function frame() {
     // Stay up for the whole step (the camera holds through ~62% of it),
     // then fade out as it travels to the next one.
     for (const s of lv.def.steps) {
-      w = Math.max(w, clamp01(Math.min((u - s + 0.35) / 0.35, (s + 0.85 - u) / 0.35)));
+      w = Math.max(w, clamp01(Math.min((u - s + 0.25) / 0.20, (s + 0.95 - u) / 0.20)));
     }
 
     if (w <= 0.002) {
@@ -623,10 +632,21 @@ if (renderer) {
   measure();
   window.addEventListener('load', () => { measure(); setTimeout(measure, 400); });
 
+  // Pause while the tab is hidden. Tracking the handle matters: a pending
+  // rAF resumes on its own when the tab comes back, so starting another
+  // loop here would leave two running at once.
   let running = true;
+  let rafId = 0;
+
   document.addEventListener('visibilitychange', () => {
-    running = !document.hidden;
-    if (running) { clock.getDelta(); loop(); }
+    if (document.hidden) {
+      running = false;
+      if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+    } else if (!running) {
+      running = true;
+      clock.getDelta();   // drop the gap so damping doesn't jump
+      loop();
+    }
   });
 
   window.__look = (o = {}) => {
@@ -640,6 +660,14 @@ if (renderer) {
       fill: fillLight.intensity, rim: rimLight.intensity,
       exposure: renderer.toneMappingExposure,
     };
+  };
+
+  // Scroll somewhere and run the animation forward deterministically, without
+  // depending on rAF (which is throttled whenever the tab isn't visible).
+  window.__settle = (y, n = 30) => {
+    if (y !== undefined) window.scrollTo(0, y);
+    for (let k = 0; k < n; k++) frame(1 / 60);
+    return window.__tour();
   };
 
   window.__tour = () => {
@@ -676,9 +704,11 @@ if (renderer) {
   };
 
   function loop() {
+    rafId = 0;
     if (!running) return;
     frame();
-    requestAnimationFrame(loop);
+    rafId = requestAnimationFrame(loop);
   }
+
   loop();
 }

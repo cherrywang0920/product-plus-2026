@@ -222,8 +222,13 @@
 
   /* ---------- scrolling plates ---------- */
 
-  .plate {
-    min-height: var(--h, 100svh);
+  /* .plate is the scroll track. .plate__pin sticks for the length of the
+     track minus one viewport, so the card holds still while the control
+     actuates, then slides away as the next one comes up. */
+  .plate { min-height: var(--h, 100svh); }
+  .plate__pin {
+    position: sticky; top: 0;
+    height: 100svh;
     display: flex; align-items: center;
     padding: 72px clamp(28px, 5vw, 76px) 72px clamp(42px, 5.4vw, 92px);
   }
@@ -370,8 +375,7 @@
     .tour { display: block; position: relative; }
     .stage { height: 100svh; border-left: 0; border-bottom: 1px solid var(--rule-soft); }
     .plates { margin-top: -100svh; position: relative; z-index: 2; }
-    .plate {
-      min-height: var(--h, 100svh);
+    .plate__pin {
       align-items: flex-end;
       padding: 0 clamp(14px, 4vw, 26px) clamp(16px, 4vh, 30px);
     }
@@ -425,75 +429,89 @@
 
   <div class="plates">
 
-    <section class="plate" style="--h:100svh">
-      <div class="card">
-        <p class="eyebrow">The hardware</p>
-        <h1>The earpiece Aritzia already owns.</h1>
-        <p class="lede">Atelier, by Joule is software, not hardware. It loads onto the earpieces boutiques already use &mdash; so there is nothing to buy, nothing new to carry, and nothing an associate has to be taught to hold.</p>
-        <p class="body">Three controls do the whole job on a shift. Scroll to see each one.</p>
-        <p class="spec"><span>Ear unit 27 &times; 20 &times; 25 mm</span><span>Boom microphone</span><span>Existing Aritzia hardware</span></p>
-        <p class="hint"><span class="hint__line"></span>Scroll</p>
+    <section class="plate" style="--h:150svh">
+      <div class="plate__pin">
+        <div class="card">
+          <p class="eyebrow">The hardware</p>
+          <h1>The earpiece Aritzia already owns.</h1>
+          <p class="lede">Atelier, by Joule is software, not hardware. It loads onto the earpieces boutiques already use &mdash; so there is nothing to buy, nothing new to carry, and nothing an associate has to be taught to hold.</p>
+          <p class="body">Three controls do the whole job on a shift. Scroll to see each one.</p>
+          <p class="spec"><span>Ear unit 27 &times; 20 &times; 25 mm</span><span>Boom microphone</span><span>Existing Aritzia hardware</span></p>
+          <p class="hint"><span class="hint__line"></span>Scroll</p>
+        </div>
       </div>
     </section>
 
-    <section class="plate" style="--h:135svh">
-      <div class="card">
-        <p class="eyebrow">Anatomy</p>
-        <h2>Seven parts. Three of them matter on the floor.</h2>
-        <p class="body">Every part of this unit already exists in the boutique today. Atelier adds a voice layer on top of it, and the interface an associate actually touches comes down to a <strong>dial</strong>, a <strong>mute button</strong> and an <strong>indicator light</strong>.</p>
-        <p class="body">None of the three needs to be looked at. All of them can be found by touch, with both hands full.</p>
+    <section class="plate" style="--h:230svh">
+      <div class="plate__pin">
+        <div class="card">
+          <p class="eyebrow">Anatomy</p>
+          <h2>Seven parts. Three of them matter on the floor.</h2>
+          <p class="body">Every part of this unit already exists in the boutique today. Atelier adds a voice layer on top of it, and the interface an associate actually touches comes down to a <strong>dial</strong>, a <strong>mute button</strong> and an <strong>indicator light</strong>.</p>
+          <p class="body">None of the three needs to be looked at. All of them can be found by touch, with both hands full.</p>
+        </div>
       </div>
     </section>
 
-    <section class="plate" style="--h:155svh">
-      <div class="card">
-        <p class="eyebrow">Control 01 &middot; Clock-in</p>
-        <h2>On, off, and a light that says you&rsquo;re reachable.</h2>
-        <p class="body">Earpieces are picked up at clock-in and powered on once. The indicator light is the only confirmation an associate needs: <strong>lit means on shift and reachable.</strong></p>
-        <p class="body">Off shift, the unit is off and nothing can reach it. That is deliberate &mdash; it keeps work messages off personal phones and out of unpaid hours, which matters most in the US, where about 62% of Aritzia&rsquo;s revenue sits.</p>
-        <p class="spec"><span>Press &rarr; power</span><span>Steady blue &rarr; on shift</span><span>Dark &rarr; off shift</span></p>
+    <section class="plate" style="--h:250svh">
+      <div class="plate__pin">
+        <div class="card">
+          <p class="eyebrow">Control 01 &middot; Clock-in</p>
+          <h2>On, off, and a light that says you&rsquo;re reachable.</h2>
+          <p class="body">Earpieces are picked up at clock-in and powered on once. The indicator light is the only confirmation an associate needs: <strong>lit means on shift and reachable.</strong></p>
+          <p class="body">Off shift, the unit is off and nothing can reach it. That is deliberate &mdash; it keeps work messages off personal phones and out of unpaid hours, which matters most in the US, where about 62% of Aritzia&rsquo;s revenue sits.</p>
+          <p class="spec"><span>Press &rarr; power</span><span>Steady blue &rarr; on shift</span><span>Dark &rarr; off shift</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="plate" style="--h:270svh">
+      <div class="plate__pin">
+        <div class="card">
+          <p class="eyebrow">Control 02 &middot; Set level</p>
+          <h2>One dial, because a boutique is never one volume.</h2>
+          <p class="body">The dial sets how loudly a teammate&rsquo;s voice arrives. A fitting room at open is not the same room at peak on a Saturday, and the level that works for one is unusable in the other.</p>
+          <p class="body">It stays a <strong>physical, knurled dial</strong> for one reason: it can be found and turned by feel &mdash; mid-conversation, with bundles in hand, without breaking eye contact with a client.</p>
+          <p class="spec"><span>Detented rotary</span><span>Ten steps</span><span>Set by touch</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="plate" style="--h:310svh">
+      <div class="plate__pin">
+        <div class="card">
+          <p class="eyebrow">Control 03 &middot; Mute</p>
+          <h2>Press once, and the client&rsquo;s conversation stays in the room.</h2>
+          <p class="body">Atelier listens for a teammate&rsquo;s name or role at the start of speech and drops everything else on the device. Mute is the <strong>physical guarantee on top of that</strong>: press it and the microphone is off, the light turns amber, and an associate can confirm at a glance that nothing is leaving the earpiece.</p>
+          <p class="body">Press it again to come back on.</p>
+          <p class="note note--signal">Audio is never stored. Only the routed request is transcribed &mdash; the recording is discarded.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="plate" style="--h:220svh">
+      <div class="plate__pin">
+        <div class="card">
+          <p class="eyebrow">In use</p>
+          <h2>Say a name, and only that person hears you.</h2>
+          <div class="say">
+            <div class="say__line"><span class="say__who">AO &rarr; BA</span><span class="say__txt">&ldquo;Dora, can you grab the Effortless Pant in a 4, black, for suite three?&rdquo;</span></div>
+            <div class="say__line"><span class="say__who">BA &rarr; AO</span><span class="say__txt">&ldquo;On it.&rdquo;</span></div>
+          </div>
+          <p class="body">An Atelier Operator in the change rooms says the request out loud. The Boutique Associate running the floor hears it in their own ear, in their teammate&rsquo;s own voice &mdash; no screen, no refresh, no app to open.</p>
+          <p class="body">And no broadcast channel. Fifteen associates shouting over each other is the failure that moved Aritzia onto an app in the first place; targeted routing is how we avoid repeating it.</p>
+        </div>
       </div>
     </section>
 
     <section class="plate" style="--h:170svh">
-      <div class="card">
-        <p class="eyebrow">Control 02 &middot; Set level</p>
-        <h2>One dial, because a boutique is never one volume.</h2>
-        <p class="body">The dial sets how loudly a teammate&rsquo;s voice arrives. A fitting room at open is not the same room at peak on a Saturday, and the level that works for one is unusable in the other.</p>
-        <p class="body">It stays a <strong>physical, knurled dial</strong> for one reason: it can be found and turned by feel &mdash; mid-conversation, with bundles in hand, without breaking eye contact with a client.</p>
-        <p class="spec"><span>Detented rotary</span><span>Ten steps</span><span>Set by touch</span></p>
-      </div>
-    </section>
-
-    <section class="plate" style="--h:190svh">
-      <div class="card">
-        <p class="eyebrow">Control 03 &middot; Mute</p>
-        <h2>Press once, and the client&rsquo;s conversation stays in the room.</h2>
-        <p class="body">Atelier listens for a teammate&rsquo;s name or role at the start of speech and drops everything else on the device. Mute is the <strong>physical guarantee on top of that</strong>: press it and the microphone is off, the light turns amber, and an associate can confirm at a glance that nothing is leaving the earpiece.</p>
-        <p class="body">Press it again to come back on.</p>
-        <p class="note note--signal">Audio is never stored. Only the routed request is transcribed &mdash; the recording is discarded.</p>
-      </div>
-    </section>
-
-    <section class="plate" style="--h:145svh">
-      <div class="card">
-        <p class="eyebrow">In use</p>
-        <h2>Say a name, and only that person hears you.</h2>
-        <div class="say">
-          <div class="say__line"><span class="say__who">AO &rarr; BA</span><span class="say__txt">&ldquo;Dora, can you grab the Effortless Pant in a 4, black, for suite three?&rdquo;</span></div>
-          <div class="say__line"><span class="say__who">BA &rarr; AO</span><span class="say__txt">&ldquo;On it.&rdquo;</span></div>
+      <div class="plate__pin">
+        <div class="card">
+          <p class="eyebrow">And then</p>
+          <h2>Every hand-off becomes data Aritzia can act on.</h2>
+          <p class="body">The earpiece is where the request is spoken. SAP Business Data Cloud is where it lands. Each routed request is transcribed into a record &mdash; item, size, colour, boutique, found or not found &mdash; which turns the fitting room into a demand signal that sales and inventory data alone cannot see.</p>
+          <p class="chain"><span>Existing earpiece</span><em>&rarr;</em><span>Joule voice routing</span><em>&rarr;</em><span>SAP Business Data Cloud</span></p>
         </div>
-        <p class="body">An Atelier Operator in the change rooms says the request out loud. The Boutique Associate running the floor hears it in their own ear, in their teammate&rsquo;s own voice &mdash; no screen, no refresh, no app to open.</p>
-        <p class="body">And no broadcast channel. Fifteen associates shouting over each other is the failure that moved Aritzia onto an app in the first place; targeted routing is how we avoid repeating it.</p>
-      </div>
-    </section>
-
-    <section class="plate" style="--h:115svh">
-      <div class="card">
-        <p class="eyebrow">And then</p>
-        <h2>Every hand-off becomes data Aritzia can act on.</h2>
-        <p class="body">The earpiece is where the request is spoken. SAP Business Data Cloud is where it lands. Each routed request is transcribed into a record &mdash; item, size, colour, boutique, found or not found &mdash; which turns the fitting room into a demand signal that sales and inventory data alone cannot see.</p>
-        <p class="chain"><span>Existing earpiece</span><em>&rarr;</em><span>Joule voice routing</span><em>&rarr;</em><span>SAP Business Data Cloud</span></p>
       </div>
     </section>
 
