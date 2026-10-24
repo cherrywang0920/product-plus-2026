@@ -6,6 +6,7 @@
   "description": "Scroll-driven 3D walkthrough of the Atelier, by Joule earpiece controls.",
   "scripts": {
     "build": "node build.mjs",
+    "copy": "node build-html.mjs",
     "serve": "node --run build && python3 -m http.server 4321 --directory dist"
   },
   "devDependencies": {

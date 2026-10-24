@@ -32,6 +32,51 @@ cd prototype/earpiece-tour && npm install && npm run build
 `dev.html` is the local page. `index.html` is the same content as a body-only fragment
 for publishing, so it has no `<html>`/`<head>` shell — don't open that one directly.
 
+## Editing the writing
+
+**All the copy is in `src/page.html`**, in the seven `<section class="plate">` blocks near
+the bottom of the file. Nothing in `src/main.js` needs touching to change words.
+
+```bash
+# edit src/page.html, then:
+node build-html.mjs          # no npm install needed
+```
+
+Reload the page. Use `npm run build` only if you changed `src/main.js`.
+
+| Section | Line | Eyebrow |
+|---|---|---|
+| Hero | ~421 | The hardware |
+| Anatomy | ~432 | Anatomy |
+| Power + light | ~441 | Control 01 · Clock-in |
+| Volume dial | ~451 | Control 02 · Set level |
+| Mute | ~461 | Control 03 · Mute |
+| In use | ~471 | In use |
+| Close | ~484 | And then |
+
+Each block uses the same set of pieces — keep the classes and the design holds:
+
+| Class | What it is |
+|---|---|
+| `.eyebrow` | Small blue label above the heading |
+| `<h1>` / `<h2>` | The headline. `<h1>` only on the hero |
+| `.lede` | Slightly larger opening paragraph |
+| `.body` | Normal paragraph. `<strong>` inside it goes full-contrast |
+| `.spec` | Monospace facts row, divided by a rule. Each fact is its own `<span>` |
+| `.note` | Call-out box. Add `note--signal` for the amber version |
+| `.say` | The quoted exchange — `.say__who` is the speaker tag, `.say__txt` the line |
+| `.chain` | The arrow sequence at the end |
+
+Two things live elsewhere:
+
+- **Callout names on the 3D model** ("Ear hook", "Mute", …) are the `text` fields in the
+  `LABELS` array at the top of `src/main.js`.
+- **How long a section lasts** is `style="--h:155svh"` on its `<section>`. Bigger = more
+  scrolling spent there. The camera and the button presses retime themselves automatically,
+  so stretching the mute section just slows that press down; it won't desync.
+
+Use `&rsquo;` for apostrophes, `&mdash;` for em dashes, `&middot;` for the dot separator.
+
 | File | What it is |
 |---|---|
 | `src/page.html` | Page content, copy and all CSS. Published as `dist/index.html`. |
