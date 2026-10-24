@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<title>Atelier, by Joule — The Earpiece</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    /* Light palette — neutrals biased cool toward the accent */
+    --ground:      #ECEFF3;
+    --surface:     #FFFFFF;
+    --surface-tr:  rgba(255,255,255,0.78);
+    --ink:         #0B1017;
+    --ink-2:       #4A5666;
+    --ink-3:       #7E8B9C;
+    --rule:        #D3D9E1;
+    --rule-soft:   rgba(11,16,23,0.08);
+    --accent:      #0A6ED1;
+    --accent-soft: #E3EDF9;
+    --signal:      #C87A17;
+    --signal-soft: #F8EEDC;
+    --off:         #9AA6B6;
+
+    --stage-1: #FFFFFF;
+    --stage-2: #E6EBF1;
+    --stage-3: #D8DEE7;
+    --leader:  rgba(11,16,23,0.28);
+
+    --font-display: "Helvetica Neue", Helvetica, -apple-system, "Segoe UI", system-ui, sans-serif;
+    --font-body:    -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-mono:    ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #0D1014;
+      --surface:     #161B23;
+      --surface-tr:  rgba(18,23,31,0.80);
+      --ink:         #E9EDF3;
+      --ink-2:       #A2AEBE;
+      --ink-3:       #6F7C8D;
+      --rule:        #262E39;
+      --rule-soft:   rgba(233,237,243,0.10);
+      --accent:      #4BA3F5;
+      --accent-soft: #12263A;
+      --signal:      #E8A33D;
+      --signal-soft: #2A2113;
+      --off:         #56626F;
+
+      --stage-1: #1C232E;
+      --stage-2: #11161E;
+      --stage-3: #0A0D12;
+      --leader:  rgba(233,237,243,0.30);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:      #0D1014;
+    --surface:     #161B23;
+    --surface-tr:  rgba(18,23,31,0.80);
+    --ink:         #E9EDF3;
+    --ink-2:       #A2AEBE;
+    --ink-3:       #6F7C8D;
+    --rule:        #262E39;
+    --rule-soft:   rgba(233,237,243,0.10);
+    --accent:      #4BA3F5;
+    --accent-soft: #12263A;
+    --signal:      #E8A33D;
+    --signal-soft: #2A2113;
+    --off:         #56626F;
+
+    --stage-1: #1C232E;
+    --stage-2: #11161E;
+    --stage-3: #0A0D12;
+    --leader:  rgba(233,237,243,0.30);
+  }
+
+  html { scroll-behavior: auto; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- fixed chrome ---------- */
+
+  .topbar {
+    position: fixed; inset: 0 0 auto 0; z-index: 40;
+    height: 52px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    padding: 0 clamp(16px, 3vw, 34px);
+    background: var(--surface-tr);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .topbar__name {
+    font-family: var(--font-display);
+    font-weight: 600; font-size: 15px; letter-spacing: -0.02em;
+  }
+  .topbar__meta {
+    font-family: var(--font-mono);
+    font-size: 10.5px; letter-spacing: 0.11em; text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .rail {
+    position: fixed; z-index: 40;
+    left: clamp(10px, 1.4vw, 18px); top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .rail__tick {
+    width: 14px; height: 2px;
+    background: var(--rule);
+    transition: width .35s ease, background-color .35s ease;
+  }
+  .rail__tick.is-on { width: 26px; background: var(--accent); }
+  @media (max-width: 900px) { .rail { display: none; } }
+
+  /* ---------- layout ---------- */
+
+  .tour {
+    display: grid;
+    grid-template-columns: 42fr 58fr;
+    align-items: start;
+  }
+  .plates { grid-area: 1 / 1; }
+  .stage  { grid-area: 1 / 2; position: sticky; top: 0; height: 100svh; }
+
+  /* ---------- the 3D stage ---------- */
+
+  .stage {
+    overflow: hidden;
+    background:
+      radial-gradient(74% 62% at 56% 36%,
+        var(--stage-1) 0%, var(--stage-2) 56%, var(--stage-3) 100%);
+    border-left: 1px solid var(--rule-soft);
+  }
+  .stage__canvas { display: block; width: 100%; height: 100%; }
+
+  .stage__layer {
+    position: absolute; inset: 0;
+    pointer-events: none;
+  }
+  .leaders { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .leaders line { stroke: var(--leader); stroke-width: 1; }
+
+  .lbl { position: absolute; left: 0; top: 0; will-change: transform, opacity; }
+  .lbl__dot {
+    position: absolute; left: 0; top: 0;
+    width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px;
+    border-radius: 50%;
+    background: var(--ink);
+    opacity: .75;
+  }
+  .lbl__txt {
+    position: absolute; left: 0; top: 0;
+    white-space: nowrap;
+    font-family: var(--font-mono);
+    font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-2);
+    background: var(--surface-tr);
+    padding: 3px 7px;
+    border: 1px solid var(--rule-soft);
+    border-radius: 3px;
+  }
+  .lbl--key .lbl__txt { color: var(--accent); border-color: var(--accent); }
+  .lbl--key .lbl__dot { background: var(--accent); opacity: 1; }
+
+  /* ---------- device state readout ---------- */
+
+  .hud {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    display: flex; flex-wrap: wrap; gap: 8px clamp(18px, 3vw, 40px);
+    padding: 14px clamp(16px, 2.4vw, 28px);
+    background: var(--surface-tr);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid var(--rule-soft);
+    font-family: var(--font-mono);
+    opacity: 0;
+    transition: opacity .5s ease;
+  }
+  .hud.is-on { opacity: 1; }
+  .hud__cell { display: flex; align-items: center; gap: 10px; min-height: 22px; }
+  .hud__k {
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .hud__v {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--off);
+    transition: background-color .3s ease, box-shadow .3s ease;
+  }
+  .dot.is-live  { background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .dot.is-muted { background: var(--signal); box-shadow: 0 0 0 3px var(--signal-soft); }
+  .meter { display: flex; gap: 2.5px; }
+  .meter i {
+    width: 4px; height: 13px; border-radius: 1px;
+    background: var(--rule);
+    transition: background-color .18s ease;
+  }
+  .meter i.is-on { background: var(--accent); }
+  .hud__num { min-width: 1.4em; }
+  .wave { width: 92px; height: 18px; display: block; }
+
+  /* ---------- scrolling plates ---------- */
+
+  .plate {
+    min-height: var(--h, 100svh);
+    display: flex; align-items: center;
+    padding: 72px clamp(28px, 5vw, 76px) 72px clamp(42px, 5.4vw, 92px);
+  }
+  .card { max-width: 34rem; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--font-mono);
+    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 20px;
+  }
+  .eyebrow::before {
+    content: ""; width: 22px; height: 1px; background: var(--accent);
+  }
+
+  h1, h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.032em;
+    line-height: 1.04;
+    text-wrap: balance;
+    margin: 0 0 22px;
+    color: var(--ink);
+  }
+  h1 { font-size: clamp(2.3rem, 4.1vw, 3.5rem); }
+  h2 { font-size: clamp(1.75rem, 2.9vw, 2.5rem); }
+
+  .lede  { font-size: 1.08rem; color: var(--ink-2); margin: 0 0 18px; max-width: 33rem; }
+  .body  { font-size: 1rem;    color: var(--ink-2); margin: 0 0 18px; max-width: 33rem; }
+  .body strong { color: var(--ink); font-weight: 600; }
+
+  .spec {
+    font-family: var(--font-mono);
+    font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-3);
+    border-top: 1px solid var(--rule);
+    padding-top: 14px;
+    margin: 28px 0 0;
+    display: flex; flex-wrap: wrap; gap: 6px 18px;
+  }
+
+  .note {
+    display: flex; gap: 12px;
+    border-left: 2px solid var(--accent);
+    background: var(--accent-soft);
+    padding: 13px 16px;
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--ink-2);
+    border-radius: 0 3px 3px 0;
+  }
+  .note--signal { border-left-color: var(--signal); background: var(--signal-soft); }
+
+  .say { display: flex; flex-direction: column; gap: 10px; margin: 4px 0 20px; }
+  .say__line { display: flex; gap: 12px; align-items: baseline; }
+  .say__who {
+    flex: none; width: 66px;
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-3);
+    padding-top: 3px;
+  }
+  .say__txt {
+    font-family: var(--font-display);
+    font-size: 1.12rem; letter-spacing: -0.015em; line-height: 1.35;
+    color: var(--ink);
+  }
+
+  .chain {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+    margin: 26px 0 0;
+  }
+  .chain span {
+    border: 1px solid var(--rule); padding: 6px 10px; border-radius: 3px;
+    color: var(--ink-2);
+  }
+  .chain span:last-child { border-color: var(--accent); color: var(--accent); }
+  .chain em { color: var(--ink-3); font-style: normal; }
+
+  .hint {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 34px 0 0;
+  }
+  .hint__line {
+    width: 42px; height: 1px; background: var(--rule); position: relative; overflow: hidden;
+  }
+  .hint__line::after {
+    content: ""; position: absolute; inset: 0;
+    background: var(--accent);
+    animation: sweep 2.4s cubic-bezier(.5,0,.5,1) infinite;
+  }
+  @keyframes sweep {
+    0%   { transform: translateX(-100%); }
+    60%  { transform: translateX(100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  /* ---------- loading / fallback ---------- */
+
+  .boot {
+    position: absolute; inset: 0; z-index: 5;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 14px;
+    background: var(--ground);
+    font-family: var(--font-mono);
+    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-3);
+    transition: opacity .6s ease;
+  }
+  .boot.is-done { opacity: 0; pointer-events: none; }
+  .boot__bar { width: 128px; height: 2px; background: var(--rule); }
+  .boot__fill { width: 0%; height: 100%; background: var(--accent); transition: width .2s linear; }
+  .boot__msg { max-width: 24rem; text-align: center; text-transform: none; letter-spacing: 0.02em; line-height: 1.5; font-size: 12px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hint__line::after { animation: none; transform: none; }
+    .rail__tick { transition: none; }
+  }
+
+  /* ---------- narrow screens ---------- */
+
+  @media (max-width: 620px) {
+    .topbar__meta { display: none; }
+    /* Compact the cards so the earpiece stays visible above them. */
+    h1 { font-size: 1.95rem; margin-bottom: 16px; }
+    h2 { font-size: 1.6rem; margin-bottom: 16px; }
+    .lede { font-size: 0.95rem; margin-bottom: 12px; }
+    .body { font-size: 0.92rem; margin-bottom: 12px; }
+    .eyebrow { margin-bottom: 14px; }
+    .spec { margin-top: 16px; padding-top: 10px; gap: 4px 14px; }
+    .plate:first-child .spec { display: none; }
+    .hint { margin-top: 18px; }
+    .say__txt { font-size: 1rem; }
+    .note { padding: 11px 13px; font-size: 0.88rem; }
+  }
+
+  @media (max-width: 900px) {
+    .tour { display: block; position: relative; }
+    .stage { height: 100svh; border-left: 0; border-bottom: 1px solid var(--rule-soft); }
+    .plates { margin-top: -100svh; position: relative; z-index: 2; }
+    .plate {
+      min-height: var(--h, 100svh);
+      align-items: flex-end;
+      padding: 0 clamp(14px, 4vw, 26px) clamp(16px, 4vh, 30px);
+    }
+    .card {
+      max-width: 36rem;
+      background: var(--surface-tr);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--rule-soft);
+      border-radius: 6px;
+      padding: 20px 20px 22px;
+    }
+    .hud { bottom: auto; top: 52px; }
+    .lbl__txt { font-size: 9.5px; }
+  }
+</style>
+
+<header class="topbar">
+  <div class="topbar__name">Atelier, <em style="font-style:normal;color:var(--ink-3)">by Joule</em></div>
+  <div class="topbar__meta">Hardware walkthrough · SAP × Aritzia</div>
+</header>
+
+<nav class="rail" aria-hidden="true" data-rail></nav>
+
+<main class="tour">
+  <div class="stage" data-stage>
+    <canvas class="stage__canvas" data-canvas aria-hidden="true"></canvas>
+    <div class="stage__layer">
+      <svg class="leaders" data-leaders aria-hidden="true"></svg>
+      <div data-labels></div>
+    </div>
+    <div class="hud" data-hud aria-hidden="true">
+      <div class="hud__cell">
+        <span class="hud__k">Power</span>
+        <span class="hud__v"><i class="dot" data-dot="power"></i><span data-v="power">Off</span></span>
+      </div>
+      <div class="hud__cell">
+        <span class="hud__k">Volume</span>
+        <span class="hud__v"><span class="meter" data-meter></span><span class="hud__num" data-v="vol">&mdash;</span></span>
+      </div>
+      <div class="hud__cell">
+        <span class="hud__k">Microphone</span>
+        <span class="hud__v"><i class="dot" data-dot="mic"></i><span data-v="mic">Off</span><canvas class="wave" data-wave width="276" height="54"></canvas></span>
+      </div>
+    </div>
+    <div class="boot" data-boot>
+      <div class="boot__bar"><div class="boot__fill" data-boot-fill></div></div>
+      <div data-boot-label>Loading earpiece</div>
+    </div>
+  </div>
+
+  <div class="plates">
+
+    <section class="plate" style="--h:100svh">
+      <div class="card">
+        <p class="eyebrow">The hardware</p>
+        <h1>The earpiece Aritzia already owns.</h1>
+        <p class="lede">Atelier, by Joule is software, not hardware. It loads onto the earpieces boutiques already use &mdash; so there is nothing to buy, nothing new to carry, and nothing an associate has to be taught to hold.</p>
+        <p class="body">Three controls do the whole job on a shift. Scroll to see each one.</p>
+        <p class="spec"><span>Ear unit 27 &times; 20 &times; 25 mm</span><span>Boom microphone</span><span>Existing Aritzia hardware</span></p>
+        <p class="hint"><span class="hint__line"></span>Scroll</p>
+      </div>
+    </section>
+
+    <section class="plate" style="--h:135svh">
+      <div class="card">
+        <p class="eyebrow">Anatomy</p>
+        <h2>Seven parts. Three of them matter on the floor.</h2>
+        <p class="body">Every part of this unit already exists in the boutique today. Atelier adds a voice layer on top of it, and the interface an associate actually touches comes down to a <strong>dial</strong>, a <strong>mute button</strong> and an <strong>indicator light</strong>.</p>
+        <p class="body">None of the three needs to be looked at. All of them can be found by touch, with both hands full.</p>
+      </div>
+    </section>
+
+    <section class="plate" style="--h:155svh">
+      <div class="card">
+        <p class="eyebrow">Control 01 &middot; Clock-in</p>
+        <h2>On, off, and a light that says you&rsquo;re reachable.</h2>
+        <p class="body">Earpieces are picked up at clock-in and powered on once. The indicator light is the only confirmation an associate needs: <strong>lit means on shift and reachable.</strong></p>
+        <p class="body">Off shift, the unit is off and nothing can reach it. That is deliberate &mdash; it keeps work messages off personal phones and out of unpaid hours, which matters most in the US, where about 62% of Aritzia&rsquo;s revenue sits.</p>
+        <p class="spec"><span>Press &rarr; power</span><span>Steady blue &rarr; on shift</span><span>Dark &rarr; off shift</span></p>
+      </div>
+    </section>
+
+    <section class="plate" style="--h:170svh">
+      <div class="card">
+        <p class="eyebrow">Control 02 &middot; Set level</p>
+        <h2>One dial, because a boutique is never one volume.</h2>
+        <p class="body">The dial sets how loudly a teammate&rsquo;s voice arrives. A fitting room at open is not the same room at peak on a Saturday, and the level that works for one is unusable in the other.</p>
+        <p class="body">It stays a <strong>physical, knurled dial</strong> for one reason: it can be found and turned by feel &mdash; mid-conversation, with bundles in hand, without breaking eye contact with a client.</p>
+        <p class="spec"><span>Detented rotary</span><span>Ten steps</span><span>Set by touch</span></p>
+      </div>
+    </section>
+
+    <section class="plate" style="--h:190svh">
+      <div class="card">
+        <p class="eyebrow">Control 03 &middot; Mute</p>
+        <h2>Press once, and the client&rsquo;s conversation stays in the room.</h2>
+        <p class="body">Atelier listens for a teammate&rsquo;s name or role at the start of speech and drops everything else on the device. Mute is the <strong>physical guarantee on top of that</strong>: press it and the microphone is off, the light turns amber, and an associate can confirm at a glance that nothing is leaving the earpiece.</p>
+        <p class="body">Press it again to come back on.</p>
+        <p class="note note--signal">Audio is never stored. Only the routed request is transcribed &mdash; the recording is discarded.</p>
+      </div>
+    </section>
+
+    <section class="plate" style="--h:145svh">
+      <div class="card">
+        <p class="eyebrow">In use</p>
+        <h2>Say a name, and only that person hears you.</h2>
+        <div class="say">
+          <div class="say__line"><span class="say__who">AO &rarr; BA</span><span class="say__txt">&ldquo;Dora, can you grab the Effortless Pant in a 4, black, for suite three?&rdquo;</span></div>
+          <div class="say__line"><span class="say__who">BA &rarr; AO</span><span class="say__txt">&ldquo;On it.&rdquo;</span></div>
+        </div>
+        <p class="body">An Atelier Operator in the change rooms says the request out loud. The Boutique Associate running the floor hears it in their own ear, in their teammate&rsquo;s own voice &mdash; no screen, no refresh, no app to open.</p>
+        <p class="body">And no broadcast channel. Fifteen associates shouting over each other is the failure that moved Aritzia onto an app in the first place; targeted routing is how we avoid repeating it.</p>
+      </div>
+    </section>
+
+    <section class="plate" style="--h:115svh">
+      <div class="card">
+        <p class="eyebrow">And then</p>
+        <h2>Every hand-off becomes data Aritzia can act on.</h2>
+        <p class="body">The earpiece is where the request is spoken. SAP Business Data Cloud is where it lands. Each routed request is transcribed into a record &mdash; item, size, colour, boutique, found or not found &mdash; which turns the fitting room into a demand signal that sales and inventory data alone cannot see.</p>
+        <p class="chain"><span>Existing earpiece</span><em>&rarr;</em><span>Joule voice routing</span><em>&rarr;</em><span>SAP Business Data Cloud</span></p>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script type="module" src="app.js"></script>
+
+</body>
+</html>
