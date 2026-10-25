@@ -1,0 +1,7 @@
+{
+  "name": "atelier-earpiece-model",
+  "private": true,
+  "description": "Procedural three.js model of the Atelier, by Joule earpiece and its exporters",
+  "dependencies": { "three": "0.147.0" },
+  "devDependencies": { "playwright": "1.48.2" }
+}

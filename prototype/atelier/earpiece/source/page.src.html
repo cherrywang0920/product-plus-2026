@@ -1,0 +1,335 @@
+<title>Atelier Earpiece Model</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: spec-sheet viewer — large turntable stage left, parts + dimensions rail right; stacks on phones */
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --stage: #e9ecf0;
+  --stage-2: #f7f8fa;
+  --fg: #16181d;
+  --muted: #5d6470;
+  --line: #dde1e7;
+  --accent: #0a6ed1;
+  --accent-soft: #e3effb;
+  --font-display: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111317; --surface: #191c21; --stage: #2b2f36; --stage-2: #3a3f48; --fg: #eceef2; --muted: #9aa2ae;
+  --line: #2c3038; --accent: #5aa9f0; --accent-soft: #16283b; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #111317; --surface: #191c21; --stage: #2b2f36; --stage-2: #3a3f48; --fg: #eceef2; --muted: #9aa2ae;
+  --line: #2c3038; --accent: #5aa9f0; --accent-soft: #16283b; color-scheme: dark; }
+
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 14px; line-height: 1.5; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-block: 28px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; margin-bottom: 20px; }
+.eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(30px, 4.4vw, 46px); line-height: 1.05; margin: 6px 0 0; text-wrap: balance; letter-spacing: -.01em; }
+h1 em { font-style: italic; color: var(--muted); }
+.lede { color: var(--muted); max-width: 52ch; margin: 0; }
+
+.grid { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; }
+@media (max-width: 860px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+
+.stage { position: relative; border-radius: 14px; overflow: hidden; aspect-ratio: 4 / 3.3; max-width: 100%;
+  background: radial-gradient(120% 90% at 50% 35%, var(--stage-2), var(--stage)); border: 1px solid var(--line); }
+.stage canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+.stage canvas:active { cursor: grabbing; }
+.toolbar { position: absolute; left: 12px; right: 12px; bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; justify-content: space-between; pointer-events: none; }
+.toolbar > div { display: flex; flex-wrap: wrap; gap: 6px; pointer-events: auto; }
+.chip { font: 500 12px/1 var(--font-body); padding: 8px 11px; border-radius: 999px; border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 88%, transparent); color: var(--fg); cursor: pointer; backdrop-filter: blur(6px); }
+.chip:hover { border-color: var(--muted); }
+.chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.chip:focus-visible, .row:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+.hint { position: absolute; top: 12px; left: 14px; font-family: var(--font-mono); font-size: 11px; color: var(--muted); pointer-events: none; }
+.scale { position: absolute; top: 12px; right: 14px; font-family: var(--font-mono); font-size: 11px; color: var(--muted); pointer-events: none; text-align: right; }
+
+aside { display: grid; gap: 14px; min-width: 0; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+.panel h2 { font: 600 11px/1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+.rows { display: grid; gap: 2px; }
+.row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; padding: 7px 4px; border-radius: 8px; cursor: pointer; }
+.row:hover { background: var(--accent-soft); }
+.row input { accent-color: var(--accent); width: 15px; height: 15px; margin: 0; }
+.row .name { font-weight: 500; }
+.row .sub { display: block; color: var(--muted); font-size: 12px; font-weight: 400; }
+.tag { font: 500 10px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); padding: 4px 6px; border-radius: 4px; }
+dl { display: grid; grid-template-columns: 1fr auto; gap: 7px 12px; margin: 0; }
+dt { color: var(--muted); }
+dd { margin: 0; font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.swatches { display: flex; gap: 8px; flex-wrap: wrap; }
+.sw { display: flex; align-items: center; gap: 8px; padding: 6px 10px 6px 6px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--fg); font: 500 12px var(--font-body); cursor: pointer; }
+.sw i { width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--line); }
+.sw[aria-pressed="true"] { border-color: var(--fg); }
+.note { color: var(--muted); font-size: 12.5px; margin: 0; }
+.note b { color: var(--fg); font-weight: 500; }
+.anims { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
+.anims .chip { backdrop-filter: none; background: var(--surface); text-align: left; padding: 9px 11px; }
+.anims .chip.wide { grid-column: 1 / -1; background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.anims .chip.wide[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); }
+.anims .chip[aria-pressed="true"] { background: var(--accent-soft); color: var(--fg); border-color: var(--accent); }
+.err { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px; color: var(--muted); }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Atelier, by Joule · Prototype hardware · Rev A</div>
+      <h1>Atelier earpiece <em>with boom mic</em></h1>
+    </div>
+    <p class="lede">Drag to orbit, scroll or pinch to zoom, right-drag to pan. Shown for the right ear: the tip points into the ear canal and the boom follows the cheek toward the mouth. Controls live on the ear unit: press the centre to talk to Joule, turn the ring for volume, and the top button is power. Green light means on, blue means Joule is active.</p>
+  </header>
+
+  <div class="grid">
+    <div class="stage" id="stage">
+      <div class="hint" id="hint">Loading model…</div>
+      <div class="scale" id="scale">Units: mm</div>
+      <div class="toolbar">
+        <div role="group" aria-label="Camera views">
+          <button class="chip" id="v-hero" data-view="hero" aria-pressed="true">Hero</button>
+          <button class="chip" id="v-ctl" data-view="controls" aria-pressed="false">Controls</button>
+          <button class="chip" id="v-side" data-view="side" aria-pressed="false">Side</button>
+          <button class="chip" id="v-mic" data-view="mic" aria-pressed="false">Mic detail</button>
+          <button class="chip" id="v-fit" data-view="fit" aria-pressed="false">Fit check</button>
+        </div>
+        <div>
+          <button class="chip" id="spin" aria-pressed="true">Turntable</button>
+        </div>
+      </div>
+    </div>
+
+    <aside>
+      <section class="panel">
+        <h2>Parts</h2>
+        <div class="rows" id="parts"></div>
+      </section>
+      <section class="panel">
+        <h2>Animations</h2>
+        <div class="anims" id="anims"></div>
+        <p class="note" id="animNote">The same five scenes are in the GLB for PowerPoint. Each ends in its state and holds it.</p>
+      </section>
+      <section class="panel">
+        <h2>Shell finish</h2>
+        <div class="swatches" id="finishes"></div>
+      </section>
+      <section class="panel">
+        <h2>Nominal dimensions</h2>
+        <dl>
+          <dt>Ear unit</dt><dd>27 × 18 × 8</dd>
+          <dt>Volume dial Ø</dt><dd>15</dd>
+          <dt>Mute button Ø</dt><dd>10</dd>
+          <dt>Power button</dt><dd>6 × 2.4</dd>
+          <dt>Ear hook Ø</dt><dd>5.2</dd>
+          <dt>Mic boom length</dt><dd id="boomLen">≈ 92</dd>
+          <dt>Mic to mouth corner</dt><dd>≈ 20</dd>
+          <dt>Mic boom Ø</dt><dd>2.7</dd>
+          <dt>Windscreen</dt><dd>8 × 11.6</dd>
+          <dt>Plug</dt><dd>3.5 TRRS</dd>
+        </dl>
+      </section>
+      <p class="note"><b>Files:</b> the GLB (cordless, for PowerPoint, Blender and renders) and the STL (mm, for 3D printing) were sent in the chat alongside this page.</p>
+    </aside>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/environments/RoomEnvironment.js"></script>
+<script>
+/*__BUILDER__*/
+</script>
+<script>
+(function () {
+  const stage = document.getElementById('stage');
+  const hint = document.getElementById('hint');
+  if (!window.THREE || !THREE.OrbitControls) { stage.insertAdjacentHTML('beforeend', '<div class="err">The 3D library did not load. Check your connection and reload the page.</div>'); hint.hidden = true; return; }
+
+  // Printed labels as transparent decals
+  function hex(c) { return '#' + c.toString(16).padStart(6, '0'); }
+  function rgba(c, a) { return `rgba(${(c >> 16) & 255},${(c >> 8) & 255},${c & 255},${a})`; }
+  function texture(kind, col, core) {
+    const cv = document.createElement('canvas'), g = cv.getContext('2d');
+    if (kind === 'lens') {
+      // Sphere UV: v=1 at the front pole (top row) -> hot near-white core, out to saturated rim
+      cv.width = 8; cv.height = 256;
+      const gr = g.createLinearGradient(0, 0, 0, 256);
+      gr.addColorStop(0.00, hex(core)); gr.addColorStop(0.05, hex(core));
+      gr.addColorStop(0.2, hex(col)); gr.addColorStop(0.5, hex(col)); gr.addColorStop(1, rgba(col, 1));
+      g.fillStyle = gr; g.fillRect(0, 0, 8, 256);
+    } else {
+      cv.width = cv.height = 256;
+      if (kind === 'haloEmissive') { g.fillStyle = '#000'; g.fillRect(0, 0, 256, 256); }
+      const gr = g.createRadialGradient(128, 128, 0, 128, 128, 128);
+      const stops = [[0, 1], [0.2, 0.95], [0.34, 0.7], [0.5, 0.4], [0.7, 0.16], [0.86, 0.05], [1, 0]];
+      for (const [o, a] of stops) gr.addColorStop(o, kind === 'haloEmissive'
+        ? `rgb(${Math.round(((col >> 16) & 255) * a)},${Math.round(((col >> 8) & 255) * a)},${Math.round((col & 255) * a)})`
+        : rgba(col, a));
+      g.fillStyle = gr; g.fillRect(0, 0, 256, 256);
+    }
+    const t = new THREE.CanvasTexture(cv); t.encoding = THREE.sRGBEncoding; return t;
+  }
+  
+  
+  function label(text, w, h, o) {
+    const px = 40, c = document.createElement('canvas');
+    c.width = Math.round(w * px); c.height = Math.round(h * px);
+    const g = c.getContext('2d');
+    g.fillStyle = '#c9cbd0'; g.textAlign = 'center'; g.textBaseline = 'middle';
+    const size = c.height * (o.size || 0.7);
+    g.font = (o.serif ? '400 ' : '500 ') + size + 'px ' + (o.serif ? 'Newsreader, Georgia, serif' : '"IBM Plex Sans", Helvetica, sans-serif');
+    if ('letterSpacing' in g && o.spacing) g.letterSpacing = (size * o.spacing) + 'px';
+    g.fillText(text, c.width / 2, c.height / 2 + size * 0.04);
+    const tex = new THREE.CanvasTexture(c); tex.encoding = THREE.sRGBEncoding; tex.anisotropy = 8;
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshStandardMaterial({ map: tex, transparent: true, roughness: 0.6, depthWrite: false }));
+    m.renderOrder = 2; return m;
+  }
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  stage.prepend(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new THREE.RoomEnvironment(), 0.04).texture;
+
+  const camera = new THREE.PerspectiveCamera(28, 1, 1, 5000);
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true; controls.dampingFactor = 0.08; controls.minDistance = 40; controls.maxDistance = 1200;
+
+  const key = new THREE.DirectionalLight(0xffffff, 1.4); key.position.set(120, 180, 220);
+  key.castShadow = true; key.shadow.mapSize.set(2048, 2048);
+  Object.assign(key.shadow.camera, { left: -150, right: 150, top: 150, bottom: -150, near: 10, far: 700 }); key.shadow.bias = -0.0005;
+  scene.add(key);
+  const rim = new THREE.DirectionalLight(0xbfd8ff, 0.9); rim.position.set(-200, 80, -160); scene.add(rim);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x444450, 0.35));
+
+  const built = buildEarpiece(THREE, { label, texture, headRef: true });
+  const model = built.group;
+  model.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+  // Centre the model on its bounding box, then tilt it the way it would hang
+  const pivot = new THREE.Group(); scene.add(pivot);
+  model.remove(built.parts.HeadRef);
+  const box = new THREE.Box3().setFromObject(model); model.add(built.parts.HeadRef);
+  const ctr = box.getCenter(new THREE.Vector3());
+  model.position.sub(ctr); pivot.add(model);
+
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(800, 800), new THREE.ShadowMaterial({ opacity: 0.16 }));
+  floor.rotation.x = -Math.PI / 2; floor.position.y = box.min.y - ctr.y - 6; floor.receiveShadow = true; scene.add(floor);
+
+  // Camera views (target is model-space, relative to centre)
+  const rel = (x, y, z) => new THREE.Vector3(x, y, z).sub(ctr);
+  const views = {
+    hero:  { pos: new THREE.Vector3(150, 70, 360), tgt: new THREE.Vector3(0, 0, 0) },
+    controls: { pos: rel(45, 125, 85), tgt: rel(13, 96, 4) },
+    side:  { pos: new THREE.Vector3(420, 10, 0), tgt: new THREE.Vector3(0, 0, 0) },
+    mic:   { pos: rel(95, 135, 150), tgt: rel(55, 71, -8) },
+    fit:   { pos: rel(300, 150, 270), tgt: rel(45, 85, -45), head: true },
+  };
+  let anim = null;
+  function goTo(name, instant) {
+    const v = views[name]; if (!v) return;
+    document.querySelectorAll('[data-view]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.view === name)));
+    pivot.rotation.y = 0;
+    if (v.head) setPart('HeadRef', true);
+    if (instant || matchMedia('(prefers-reduced-motion: reduce)').matches) { camera.position.copy(v.pos); controls.target.copy(v.tgt); controls.update(); return; }
+    anim = { t: 0, p0: camera.position.clone(), t0: controls.target.clone(), p1: v.pos.clone(), t1: v.tgt.clone() };
+  }
+  document.querySelectorAll('[data-view]').forEach(b => b.addEventListener('click', () => { setSpin(b.dataset.view === 'hero'); goTo(b.dataset.view); }));
+
+
+  // Turntable
+  const spinBtn = document.getElementById('spin');
+  let spinning = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function setSpin(on) { spinning = on; spinBtn.setAttribute('aria-pressed', String(on)); if (!on) pivot.rotation.y = 0; }
+  setSpin(spinning);
+  spinBtn.addEventListener('click', () => setSpin(!spinning));
+  controls.addEventListener('start', () => { if (spinning) setSpin(false); });
+
+  // Parts list
+  const partInfo = [
+    ['MicBoom', 'Microphone boom', 'Curves along the cheek', true],
+    ['EarUnit', 'Ear unit + controls', 'Joule button, volume dial, power'],
+    ['EarHook', 'Ear hook', 'Over and behind the ear'],
+    ['Cable', 'Cable + 3.5 mm jack', 'Not in the GLB file', false, true],
+    ['HeadRef', 'Head reference', 'Fit check only, not exported', false, true],
+  ];
+  const partsEl = document.getElementById('parts');
+  partInfo.forEach(p => { if (p[4] && built.parts[p[0]]) built.parts[p[0]].visible = false; });
+  function setPart(id, on) { built.parts[id].visible = on; const c = document.getElementById('p-' + id); if (c) c.checked = on; }
+  partInfo.forEach(([id, name, sub, isNew, off]) => {
+    const row = document.createElement('label'); row.className = 'row';
+    row.innerHTML = '<input type="checkbox" id="p-' + id + '"' + (off ? '' : ' checked') + '><span class="name">' + name + '<span class="sub">' + sub + '</span></span>' + (isNew ? '<span class="tag">New</span>' : '<span></span>');
+    row.querySelector('input').addEventListener('change', e => { built.parts[id].visible = e.target.checked; });
+    partsEl.appendChild(row);
+  });
+
+  // Finishes
+  const finishes = [['Matte black', 0x121214, 0x0f0f10, '#121214'], ['Stone', 0xbab4aa, 0x8f8a82, '#bab4aa'], ['Ivory', 0xe9e4da, 0xcfc9be, '#e9e4da']];
+  const lin = h => new THREE.Color(h).convertSRGBToLinear();
+  const finEl = document.getElementById('finishes');
+  finishes.forEach(([n, shell, rubber, css], i) => {
+    const b = document.createElement('button'); b.className = 'sw'; b.id = 'f-' + i; b.setAttribute('aria-pressed', String(i === 0));
+    b.innerHTML = '<i style="background:' + css + '"></i>' + n;
+    b.addEventListener('click', () => {
+      built.materials.shell.color.copy(lin(shell)); built.materials.rubber.color.copy(lin(rubber));
+      built.materials.button.color.copy(lin(i === 0 ? 0x18181a : new THREE.Color(shell).multiplyScalar(0.9).getHex()));
+      finEl.querySelectorAll('.sw').forEach(s => s.setAttribute('aria-pressed', String(s === b)));
+    });
+    finEl.appendChild(b);
+  });
+
+  function resize() {
+    const r = stage.getBoundingClientRect();
+    renderer.setSize(r.width, r.height, false);
+    camera.aspect = r.width / r.height;
+    camera.fov = camera.aspect < 0.95 ? 36 : 28;
+    camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(stage); resize();
+  goTo('hero', true);
+  hint.textContent = 'Drag to orbit';
+
+  // Animation previews (same clips as the GLB)
+  const mixer = new THREE.AnimationMixer(model);
+  const clips = buildClips(THREE, built.parts);
+  const animsEl = document.getElementById('anims');
+  let current = null;
+  clips.forEach(c => {
+    const b = document.createElement('button');
+    b.className = 'chip' + (c.name === 'Off' ? ' wide' : ''); b.id = 'a-' + c.name.replace(/\s+/g, '-');
+    b.textContent = c.name; b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('click', () => {
+      setSpin(false); goTo('controls');
+      if (current) current.stop();
+      current = mixer.clipAction(c); current.reset(); current.setLoop(THREE.LoopOnce); current.clampWhenFinished = true; current.play();
+      animsEl.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    });
+    animsEl.appendChild(b);
+  });
+  mixer.addEventListener('finished', () => animsEl.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', 'false')));
+
+  const clock = new THREE.Clock();
+  (function loop() {
+    const dt = Math.min(clock.getDelta(), 0.05);
+    if (anim) {
+      anim.t = Math.min(1, anim.t + dt / 0.7); const e = 1 - Math.pow(1 - anim.t, 3);
+      camera.position.lerpVectors(anim.p0, anim.p1, e); controls.target.lerpVectors(anim.t0, anim.t1, e);
+      if (anim.t >= 1) anim = null;
+    }
+    if (spinning) pivot.rotation.y += dt * 0.35;
+    mixer.update(dt);
+    controls.update(); renderer.render(scene, camera);
+    requestAnimationFrame(loop);
+  })();
+})();
+</script>

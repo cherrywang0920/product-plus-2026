@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atelier, by Joule · Prototype</title>
+<style>
+:root{--bg:#f5f6f7;--tile:#fff;--fg:#131e29;--muted:#556b82;--brand:#0064d9}
+@media (prefers-color-scheme:dark){:root{--bg:#12161b;--tile:#1b2128;--fg:#e8edf2;--muted:#9fb0c2;--brand:#5aa9f0}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 Arial,Helvetica,sans-serif}
+main{max-width:760px;margin:0 auto;padding:56px max(16px,env(safe-area-inset-left))}
+h1{font-size:32px;margin:0 0 6px}p{color:var(--muted);margin:0 0 28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+a.card{display:block;background:var(--tile);border-radius:14px;padding:22px;text-decoration:none;color:var(--fg);box-shadow:0 0 2px rgba(34,53,72,.2),0 2px 4px rgba(34,53,72,.2)}
+a.card:hover,a.card:focus-visible{outline:2px solid var(--brand)}
+a.card b{display:block;font-size:18px;margin-bottom:4px}a.card span{color:var(--muted);font-size:14px}
+footer{margin-top:32px;font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<main>
+<h1>Atelier, by Joule</h1>
+<p>Voice earpiece software for Aritzia, powered by SAP Joule. Product+ 2026 prototype by Dora Hu, Brady Spur and Cherry Wang.</p>
+<div class="grid">
+<a class="card" href="dashboard/"><b>Demand Signal dashboard</b><span>SAP Analytics Cloud–style story showing anonymized fitting-room signals for head office.</span></a>
+<a class="card" href="earpiece/"><b>Earpiece 3D model</b><span>Interactive model with boom mic, controls and status-light scenes.</span></a>
+</div>
+<footer>All figures and snippets are illustrative sample data, not real Aritzia data.</footer>
+</main>
+</body>
+</html>
